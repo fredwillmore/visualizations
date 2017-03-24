@@ -1,7 +1,10 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
 
-function barChart(options={}){
+function barChart(options){
+  if (typeof options == 'undefined') {
+    param = {};
+  }
   // set default parameters
   options = Object.assign({
     selector: 'body',
@@ -77,7 +80,10 @@ function barChart(options={}){
   });
 }
 
-function pieChart(options = {}) {
+function pieChart(options) {
+  if (typeof options == 'undefined') {
+    param = {};
+  }
 
   options = Object.assign({
     selector: 'body',
@@ -138,7 +144,10 @@ function pieChart(options = {}) {
   });
 }
 
-function scatterPlot(options = {}){
+function scatterPlot(options){
+  if (typeof options == 'undefined') {
+    param = {};
+  }
 
   options = Object.assign({
     selector: 'body',
