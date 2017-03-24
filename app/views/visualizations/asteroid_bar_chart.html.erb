@@ -1,0 +1,14 @@
+<div class="bar-chart" id="asteroid_count_by_code_linear">
+  <h3>Asteroid Count By Condition Code - Linear Scale</h3>
+</div>
+<div class="bar_chart" id="asteroid_count_by_code_log">
+  <h3>Asteroid Count By Condition Code - Logarithmic Scale</h3>
+</div>
+<p>
+  Thanks to user d3noob at bl.ocks.org for the starter code: <%= link_to "https://bl.ocks.org/d3noob/bdf28027e0ce70bd132edc64f1dd7ea4" %>
+</p>
+<%= render partial: 'thanks_nasa' %>
+<script>
+  barChart({selector: '#asteroid_count_by_code_linear', yScale: 'linear'});
+  barChart({selector: '#asteroid_count_by_code_log', yScale: 'log'});
+</script>

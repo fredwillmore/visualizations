@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Comets</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @comets.each do |comet| %>
+      <tr>
+        <td><%= link_to 'Show', comet %></td>
+        <td><%= link_to 'Edit', edit_comet_path(comet) %></td>
+        <td><%= link_to 'Destroy', comet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Comet', new_comet_path %>

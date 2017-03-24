@@ -1,0 +1,1 @@
+json.partial! "comets/comet", comet: @comet

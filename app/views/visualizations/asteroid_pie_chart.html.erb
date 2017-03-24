@@ -1,0 +1,16 @@
+<div class="pie-chart" id="asteroid_count_by_code_linear">
+  <h3>Asteroids By Condition Code</h3>
+</div>
+
+<p>
+  Thanks to user mbostock at bl.ocks.org for the starter code: <%= link_to "https://bl.ocks.org/mbostock/3887235" %>
+</p>
+<%= render partial: 'thanks_nasa' %>
+<script>
+  pieChart({
+    selector: '#asteroid_count_by_code_linear',
+    labelField: 'condition_code',
+    valueField: 'count',
+    height: 1000
+  });
+</script>

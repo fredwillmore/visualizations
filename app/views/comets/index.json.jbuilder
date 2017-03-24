@@ -1,0 +1,1 @@
+json.array! @comets, partial: 'comets/comet', as: :comet

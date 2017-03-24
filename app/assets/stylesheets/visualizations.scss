@@ -1,0 +1,40 @@
+// Place all the styles related to the visualizations controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.bar-chart svg {
+  rect {
+    fill: steelblue;
+  }
+
+  text {
+    font: 10px sans-serif;
+    text-anchor: end;
+  }
+}
+
+.pie-chart svg {
+  .arc text {
+    font: 10px sans-serif;
+    text-anchor: middle;
+  }
+
+  .arc path {
+    stroke: #fff;
+  }
+}
+
+.scatter-plot svg {
+  .axis text {
+    font: 10pt sans-serif;
+  }
+  .axis .label {
+    font-size: 16pt;
+  }
+
+  .axis path, .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+  }
+}
