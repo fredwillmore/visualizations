@@ -40,13 +40,16 @@ ActiveRecord::Schema.define(version: 20170319172551) do
     t.string   "spec_t"
     t.datetime "created_at",                               null: false
     t.datetime "updated_at",                               null: false
+    t.decimal  "density",        precision: 8,  scale: 8
   end
 
   create_table "business_entities", force: :cascade do |t|
     t.string "structure"
+    t.string "legal_structure"
     t.string "status"
     t.string "collection_status"
     t.string "language"
+    t.string "credit_limit_type"
     t.string "established_country"
     t.string "established_state"
     t.string "address_street"
@@ -55,8 +58,10 @@ ActiveRecord::Schema.define(version: 20170319172551) do
     t.string "address_state"
     t.string "address_country"
     t.string "address_postal_code"
+    t.string "phone_country_code"
     t.string "phone_number"
     t.string "email_address"
+    t.string "business_entity_type"
     t.string "business_entity_name"
   end
 
