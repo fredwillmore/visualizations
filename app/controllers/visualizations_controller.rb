@@ -149,4 +149,23 @@ class VisualizationsController < ApplicationController
     end
   end
 
+  def psu_data
+    respond_to do |format|
+      format.html do
+        render :psu_data
+      end
+      format.json do
+        parsed_file = CSV.read("#{Rails.root}/db/seeds/data/graduates/portland_state/#{params[:year] || 2016}.csv", { col_sep: "\t", headers: true })
+        result = parsed_file.map(&:to_h)
+        json = case params[:type]
+          when 'by_program_male'
+            result
+          else
+            result
+        end
+        render json: json
+      end
+    end
+  end
+
 end

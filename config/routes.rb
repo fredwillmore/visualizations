@@ -7,7 +7,7 @@ Rails.application.routes.draw do
       get 'asteroid_bar_chart'
       get 'asteroid_pie_chart'
       get 'asteroid_scatter_plot'
-
+      get 'psu_data'
     end
   end
   # The priority is based upon order of creation: first created -> highest priority.

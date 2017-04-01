@@ -31,14 +31,17 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # gem 'capistrano-rails', group: :development
 
 gem 'kaminari'
-gem "d3-rails"
+gem 'd3-rails'
 gem 'active_model_serializers'
+gem 'sprockets-es6'
+gem 'babel-transpiler'
 
 group :development, :test do
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+  gem 'jasmine'
 end
 
 group :test do

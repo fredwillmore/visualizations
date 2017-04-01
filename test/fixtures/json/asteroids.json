@@ -1,0 +1,9 @@
+[
+  {"condition_code":"0 - Nothing to worry about","count":52723},
+  {"condition_code":"1 - Probably nothing to worry about","count":33328},
+  {"condition_code":"2 - If you must worry, start here","count":20150},
+  {"condition_code":"3 - Ok wait maybe this is something","count":13049},
+  {"condition_code":"4 - What's that little blip there","count":18155},
+  {"condition_code":"5 - It doesn't look like it's moving... that means it's heading right for us!","count":22263},
+  {"condition_code":"6 - Say your prayers","count":22530}
+]

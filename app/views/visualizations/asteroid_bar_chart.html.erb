@@ -9,6 +9,21 @@
 </p>
 <%= render partial: 'thanks_nasa' %>
 <script>
-  barChart({selector: '#asteroid_count_by_code_linear', yScale: 'linear'});
-  barChart({selector: '#asteroid_count_by_code_log', yScale: 'log'});
+  d3.json('/visualizations/asteroid_bar_chart.json', function(error, data) {
+    if (error) throw error;
+    new BarChart({
+      selector: '#asteroid_count_by_code_linear',
+      yScale: 'linear',
+      data: data,
+      labelField: 'condition_code',
+      valueField: 'count'
+    }).draw();
+    new BarChart({
+      selector: '#asteroid_count_by_code_log',
+      yScale: 'log',
+      data: data,
+      labelField: 'condition_code',
+      valueField: 'count'
+    }).draw();
+  });
 </script>
