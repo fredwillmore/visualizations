@@ -3,63 +3,57 @@ class BarChart {
   constructor(options = {}) {
 
     // set default parameters
-    this.options = Object.assign({
+    var o = this.options = Object.assign({
       selector: 'body',
       data: [],
       labelField: 'label',
       valueField: 'count',
-      top: 20,
-      right: 20,
-      bottom: 30,
-      left: 80,
+      margin: {top: 20, right: 20, bottom: 60, left: 80},
       width: 960,
       height: 500,
       yScale: 'linear'
     }, options);
 
     // set the dimensions and margins of the graph
-    this.margin = {top: this.options.top, right: this.options.right, bottom: this.options.bottom, left: this.options.left},
-        this.innerWidth = this.options.width - this.margin.left - this.margin.right,
-        this.innerHeight = this.options.height - this.margin.top - this.margin.bottom;
+    this.margin = o.margin;
+    this.innerWidth = o.width - this.margin.left - this.margin.right;
+    this.innerHeight = o.height - this.margin.top - this.margin.bottom;
 
     // label and value fields
-    this.labelField = options.labelField;
-    this.valueField = options.valueField;
+    this.labelField = o.labelField;
+    this.valueField = o.valueField;
 
     // handle data
-    this.data = options.data;
+    this.data = o.data;
     this.formatData();
 
-    this.setRanges();
+    this.createScales();
   }
 
-  setRanges(){
+  createScales(){
     this.xScale = d3.scaleBand()
-              .range([0, this.innerWidth])
-              .padding(0.1);
+      .range([0, this.innerWidth])
+      .padding(0.1);
     this.yScale = getScale(this.options.yScale).range([this.innerHeight, 0]);
+    this.colorScale = getScale('color');
+    this.brightnessScale = getScale('linear').domain([0,5]).range([0,1]);
   }
 
   formatData(){
-    var valueField = this.valueField;
-    this.data.forEach(function(d) {
-      d[valueField] = +d[valueField];
-      if(isNaN(d[valueField])){
-        d[valueField] = 0;
+    this.data.forEach((d) => {
+      d[this.valueField] = +d[this.valueField];
+      if(isNaN(d[this.valueField])){
+        d[this.valueField] = 0;
       }
     });
   }
 
   draw() {
-    var xScale = this.xScale,
-      yScale = this.yScale,
-      innerHeight = this.innerHeight,
-      labelField = this.labelField,
-      valueField = this.valueField;
 
     // Scale the range of the data in the domains
-    xScale.domain(this.data.map(function(d) { return d[labelField]; }));
-    yScale.domain([1, d3.max(this.data, function(d) { return d[valueField]; })]);
+    this.xScale.domain(this.data.map((d) => d[this.labelField]));
+    this.yScale.domain([1, d3.max(this.data, (d) => d[this.valueField])]);
+    this.colorScale.domain(0, this.data.length);
 
     // append the rectangles for the bar chart
     var svg = d3.select(this.options.selector).append("svg")
@@ -67,32 +61,46 @@ class BarChart {
         .attr("height", this.innerHeight + this.margin.top + this.margin.bottom)
       .append("g")
         .attr("transform",
-              "translate(" + this.margin.left + "," + this.margin.top + ")");
+              `translate(${this.margin.left},${this.margin.top})`);
 
     svg.selectAll(".bar")
         .data(this.data)
       .enter().append("rect")
-        .attr("class", "bar")
-        .attr("x", function(d) { return xScale(d[labelField]); })
-        .attr("width", xScale.bandwidth())
-        .attr("y", function(d) { return yScale(d[valueField]); })
-        .attr("height", function(d) { return innerHeight - yScale(d[valueField]); });
+        .attr("fill", (d, i) => d3.rgb(this.colorScale(0)).brighter(this.brightnessScale(i)))
+        .attr("x", (d) => this.xScale(d[this.labelField]))
+        .attr("width", this.xScale.bandwidth())
+        .attr("y", (d) => this.yScale(d[this.valueField]))
+        .attr("height", (d) => this.innerHeight - this.yScale(d[this.valueField]));
 
+    var grads = svg.append("defs").selectAll("linearGradient")
+      .data(this.data)
+      .enter()
+      .append("linearGradient")
+      .attr("id", (d, i) => "grad"+i);
+
+    this.addAxes(svg);
+
+  }
+
+  addAxes(svg) {
     // add the x Axis
     svg.append("g")
-        .attr("transform", "translate(0," + innerHeight + ")")
-        .call(d3.axisBottom(xScale));
+        .attr("transform", `translate(0, ${this.innerHeight})`)
+        .attr("width", "90")
+        .call(d3.axisBottom(this.xScale))
+        .selectAll(".tick text")
+        .call(wrap, this.xScale.bandwidth());
 
     // add the y Axis
-    switch(yScale){
+    switch(this.options.yScale){
       case 'log':
-        svg.append("g").call(d3.axisLeft(yScale).ticks(10, ",.0f"));
+        svg.append("g").call(d3.axisLeft(this.yScale).ticks(10, ",.0f"));
         break;
       case 'linear':
       default:
-        svg.append("g").call(d3.axisLeft(yScale));
+        svg.append("g").call(d3.axisLeft(this.yScale));
         break;
     }
-
   }
+
 }

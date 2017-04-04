@@ -5,7 +5,7 @@ class PieChart {
       options = {};
     }
 
-    this.options = Object.assign({
+    var o = this.options = Object.assign({
       selector: 'body',
       top: 20,
       width: 960,
@@ -15,9 +15,10 @@ class PieChart {
       valueField: 'count'
     }, options);
 
-    this.data = this.options.data;
-    this.radius = Math.min(this.options.width, this.options.height) / 2;
-
+    this.data = o.data;
+    this.radius = Math.min(o.width, o.height) / 2;
+    this.valueField = o.valueField;
+    this.labelField = o.labelField;
     this.createScales();
   }
 
@@ -31,11 +32,9 @@ class PieChart {
         .attr("height", this.options.height),
       g = svg.append("g").attr("transform", "translate(" + this.options.width / 2 + "," + this.options.height / 2 + ")");
 
-
-    var valueField = this.options.valueField, labelField = this.options.labelField;
     var pie = d3.pie()
       .sort(null)
-      .value(function(d) { return d[valueField]; });
+      .value((d) => d[this.valueField]);
 
     // TODO: configure these radii
     var path = d3.arc()
@@ -47,8 +46,8 @@ class PieChart {
       .innerRadius(this.radius - 40);
 
     // format the data
-    this.data.forEach(function(d) {
-      d[valueField] = +d[valueField];
+    this.data.forEach((d) => {
+      d[this.valueField] = +d[this.valueField];
     });
 
     var arc = g.selectAll(".arc")
@@ -56,15 +55,14 @@ class PieChart {
       .enter().append("g")
         .attr("class", "arc");
 
-    var colorScale = this.colorScale;
     arc.append("path")
         .attr("d", path)
-        .attr("fill", function(d) { return colorScale(d.data[labelField]); });
+        .attr("fill", (d) => this.colorScale(d.data[this.labelField]));
 
     // TODO: configure these text attributes
     arc.append("text")
         .attr("transform", function(d) { return "translate(" + label.centroid(d) + ")"; })
         .attr("dy", "0.35em")
-        .text(function(d) { return d.data[labelField]; });
+        .text((d) => d.data[this.labelField]);
   }
 }

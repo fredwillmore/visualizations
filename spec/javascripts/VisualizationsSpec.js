@@ -36,6 +36,7 @@ describe("Visualization - Stacked Grouped Bar Chart", function() {
         visualization.transitionStacked();
       }, 1000);
     }, 1000);
+    expect(d3.select('body').select('svg').select('rect').attr('label')).toContain('Value Field 1');
     done();
   });
 
@@ -53,7 +54,9 @@ describe("Visualization - Bar Chart", function() {
         selector: 'body',
         data: data,
         labelField: 'condition_code',
-        valueField: 'count'
+        valueField: 'count',
+        width: 960,
+        yScale: 'linear'
       });
       visualization.draw();
 
