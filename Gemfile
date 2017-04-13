@@ -35,13 +35,14 @@ gem 'd3-rails'
 gem 'active_model_serializers'
 gem 'sprockets-es6'
 gem 'babel-transpiler'
+gem 'react-rails'
 
 group :development, :test do
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
-  gem 'jasmine'
+  # gem 'jasmine'
 end
 
 group :test do
