@@ -51,7 +51,7 @@ helpers:
 #   - '**/*[sS]pec.js'
 #
 spec_files:
-  - '**/*[sS]pec.js'
+  - '**/*[sS]pec.{js,jsx}'
 
 # src_dir
 #
@@ -132,4 +132,3 @@ boot_files:
 # random: true
 #
 random:
-

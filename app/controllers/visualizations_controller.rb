@@ -1,7 +1,7 @@
 class VisualizationsController < ApplicationController
   require 'csv'
   def index
-    Asteroid.by_condition_code
+    @asteroids_by_condition_code = Asteroid.by_condition_code
   end
 
   def asteroid_bar_chart
@@ -161,7 +161,8 @@ class VisualizationsController < ApplicationController
           when 'by_program_male'
             result
           else
-            result
+            debugger
+            h
         end
         render json: json
       end

@@ -1,3 +1,4 @@
+import React from 'react'
 
 describe("Visualization - Stacked Grouped Bar Chart", function() {
   var visualization;
