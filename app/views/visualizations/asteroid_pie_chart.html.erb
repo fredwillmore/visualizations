@@ -1,20 +1,13 @@
-<div class="pie-chart" id="asteroid_count_by_code_linear">
-  <h3>Asteroids By Condition Code</h3>
+<div class="pie-chart">
+  <h2>Asteroids By Condition Code</h2>
 </div>
+<%= react_component 'PieChart',
+      yScale: 'log',
+      data: '/visualizations/asteroid_bar_chart.json',
+      labelField: 'condition_code',
+      valueField: 'count' %>
 
 <p>
   Thanks to user mbostock at bl.ocks.org for the starter code: <%= link_to "https://bl.ocks.org/mbostock/3887235" %>
 </p>
 <%= render partial: 'thanks_nasa' %>
-<script>
-  d3.json('/visualizations/asteroid_pie_chart.json', function(error, data) {
-    if (error) throw error;
-    new PieChart({
-      selector: '#asteroid_count_by_code_linear',
-      labelField: 'condition_code',
-      valueField: 'count',
-      height: 1000,
-      data: data
-    }).draw();
-  });
-</script>
