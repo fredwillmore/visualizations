@@ -19,9 +19,9 @@ class BarChart extends React.Component {
 
   formatData(data) {
     data.forEach((d) => {
-      d[this.valueField] = +d[this.valueField];
-      if(isNaN(d[this.valueField])){
-        d[this.valueField] = 0;
+      d[this.props.valueField] = +d[this.props.valueField];
+      if(isNaN(d[this.props.valueField])){
+        d[this.props.valueField] = 0;
       }
     });
     return data;

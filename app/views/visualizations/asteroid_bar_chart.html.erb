@@ -1,14 +1,12 @@
-<h3>Asteroid Count By Condition Code - Linear Scale</h3>
+<h2>Asteroid Count By Condition Code - Linear Scale</h2>
 <%= react_component 'BarChart',
-      selector: '#asteroid_count_by_code_linear',
       yScale: 'linear',
       data: '/visualizations/asteroid_bar_chart.json',
       labelField: 'condition_code',
       valueField: 'count' %>
 
-<h3>Asteroid Count By Condition Code - Logarithmic Scale</h3>
+<h2>Asteroid Count By Condition Code - Logarithmic Scale</h2>
 <%= react_component 'BarChart',
-      selector: '#asteroid_count_by_code_linear',
       yScale: 'log',
       data: '/visualizations/asteroid_bar_chart.json',
       labelField: 'condition_code',
