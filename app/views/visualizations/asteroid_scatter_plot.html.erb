@@ -1,19 +1,12 @@
-<div class="scatter-plot" id="asteroid_orbit_and_mass">
-  <h3>Asteroid Diameter and Orbit Info</h3>
-</div>
+<h2>Asteroid Diameter and Orbit Info</h2>
+<%= react_component 'ScatterPlot',
+      height: 500,
+      radiusMin: 4,
+      radiusMax: 50,
+      colorScheme: 'schemeCategory20b',
+      data: '/visualizations/asteroid_scatter_plot.json' %>
 
 <p>
   Thanks to user curran at github for the starter code: <%= link_to "http://curran.github.io/screencasts/introToD3/examples/viewer/#/106" %>
 </p>
 <%= render partial: 'thanks_nasa' %>
-<script>
-  d3.json("/visualizations/asteroid_scatter_plot.json", function(error, data) {
-    new ScatterPlot({
-      selector: '#asteroid_orbit_and_mass',
-      height: 500,
-      radiusMin: 4,
-      radiusMax: 50,
-      data: data
-    }).draw();
-  });
-</script>

@@ -27,11 +27,15 @@ class Axis extends React.Component {
   render(){
     return (
       <g
-        className="axis"
+        className = {this.props.className}
         ref="axis"
         transform = {this.props.transform}
         width = {this.props.width}
       />
     )
   }
+}
+
+Axis.defaultProps = {
+  className: "axis"
 }
