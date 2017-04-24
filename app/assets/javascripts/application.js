@@ -13,7 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require d3
-//= require react-with-addons
+//= require react
 //= require react_ujs
 //= require components
 //= require_tree .

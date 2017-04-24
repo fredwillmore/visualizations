@@ -14,11 +14,16 @@ class Axis extends React.Component {
   renderAxis() {
     var node  = this.refs.axis
     var axis = this.props.axis(this.props.scale)
-    if(this.props.tickFormat) {
-      axis.ticks(10, this.props.tickFormat)
+    if(this.props.tickFormat){
+      if(typeof(this.props.tickFormat) == 'function'){
+        axis.tickFormat(this.props.tickFormat)
+      } else {
+        axis.ticks(10, this.props.tickFormat)
+      }
     }
     s = d3.select(node)
       .call(axis)
+
     if(this.props.wrapWidth){
       s.selectAll(".tick text").call(wrap, this.props.wrapWidth)
     }

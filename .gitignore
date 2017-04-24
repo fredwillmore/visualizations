@@ -16,5 +16,9 @@
 !/log/.keep
 /tmp
 
+.byebug_history
+
+/node_modules
+
 /db/seed/business_entities.rb
 /db/seed/data/business_entities.json
