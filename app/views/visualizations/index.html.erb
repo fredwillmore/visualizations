@@ -1,168 +1,68 @@
-<table>
-  <thead>
-    <tr>
-      <th></th>
-    </tr>
-  </thead>
+<style>
 
-  <tbody>
-    <tr>
-      <td>
-        <div id="pieChart"></div>
-        <script>
-        var pie = new d3pie("pieChart", {
-	"header": {
-		"title": {
-			"text": "Asteroid count by condition code",
-			"fontSize": 22,
-			"font": "verdana"
-		},
-		"subtitle": {
-			"text": "now it's a pie chart",
-			"color": "#999999",
-			"fontSize": 10,
-			"font": "verdana"
-		},
-		"titleSubtitlePadding": 12
-	},
-	"footer": {
-		"text": "Source: NASA: https://ssd.jpl.nasa.gov/sbdb_query.cgi",
-		"color": "#999999",
-		"fontSize": 11,
-		"font": "verdana",
-		"location": "bottom-center"
-	},
-	"size": {
-		"canvasHeight": 400,
-		"canvasWidth": 590,
-		"pieOuterRadius": "88%"
-	},
-	"data": {
-		"content": [
-      <%
-        colors = ['7e3838', '334455', 'aaccca', '223111', 'ffaa00', '00ffaa', '2200ff', 'aabbee', '33aa33', '998877']
-        @asteroids_by_condition_code.each_with_index do |kv, i|
-          v = kv[1]
-          label = kv[0]
-      %>
-			{
-				"label": "<%= label %>",
-				"value": <%= v %>,
-				"color": "#<%= colors[i] %>"
-			},
-      <% end %>
-		]
-	},
-	"labels": {
-		"outer": {
-			"pieDistance": 32
-		},
-		"inner": {
-			"format": "value"
-		},
-		"mainLabel": {
-			"font": "verdana"
-		},
-		"percentage": {
-			"color": "#e1e1e1",
-			"font": "verdana",
-			"decimalPlaces": 0
-		},
-		"value": {
-			"color": "#e1e1e1",
-			"font": "verdana"
-		},
-		"lines": {
-			"enabled": true,
-			"color": "#cccccc"
-		},
-		"truncation": {
-			"enabled": true
-		}
-	},
-	"effects": {
-		"pullOutSegmentOnClick": {
-			"effect": "linear",
-			"speed": 400,
-			"size": 8
-		}
-	}
-});
-        </script>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <style>
+  .graticule {
+    fill: none;
+    stroke: #777;
+    stroke-width: 0.5px;
+    stroke-opacity: 0.5;
+  }
 
-        .graticule {
-          fill: none;
-          stroke: #777;
-          stroke-width: 0.5px;
-          stroke-opacity: 0.5;
-        }
+  .land {
+    fill: #999;
+  }
 
-        .land {
-          fill: #222;
-        }
+  .boundary {
+    fill: none;
+    stroke: #fff;
+    stroke-width: 0.5px;
+  }
 
-        .boundary {
-          fill: none;
-          stroke: #fff;
-          stroke-width: 0.5px;
-        }
+</style>
 
-        </style>
-        <svg class="world" width="960" height="960"></svg>
-        <script src="//d3js.org/d3.v4.min.js"></script>
-        <script src="//d3js.org/d3-geo-projection.v1.min.js"></script>
-        <script src="//d3js.org/topojson.v1.min.js"></script>
-        <script>
+<svg class="world" width="960" height="960"></svg>
+<script src="//d3js.org/d3-geo-projection.v1.min.js"></script>
+<script src="//d3js.org/topojson.v1.min.js"></script>
+<script>
+  var svg = d3.select(".world"),
+      width = +svg.attr("width"),
+      height = +svg.attr("height"),
+      g = svg.append("g").attr("transform", "rotate(90 480,480)");
 
-        var svg = d3.select(".world"),
-            width = +svg.attr("width"),
-            height = +svg.attr("height"),
-            g = svg.append("g").attr("transform", "rotate(90 480,480)");
+  var projection = d3.geoPierceQuincuncial() // N.B. geoPeirceQuincuncial in 1.1+
+      .scale(214)
+      .translate([width / 2, height / 2])
+      .rotate([0, 0, 45])
+      .precision(0.1);
 
-        var projection = d3.geoPierceQuincuncial() // N.B. geoPeirceQuincuncial in 1.1+
-            .scale(214)
-            .translate([width / 2, height / 2])
-            .rotate([0, 0, 45])
-            .precision(0.1);
+  var path = d3.geoPath()
+      .projection(projection);
 
-        var path = d3.geoPath()
-            .projection(projection);
+  var graticule = d3.geoGraticule();
 
-        var graticule = d3.geoGraticule();
+  g.append("path")
+      .datum(graticule)
+      .attr("class", "graticule")
+      .attr("d", path);
 
-        g.append("path")
-            .datum(graticule)
-            .attr("class", "graticule")
-            .attr("d", path);
+  g.append("path")
+      .datum({type: "Sphere"})
+      .attr("class", "sphere")
+      .attr("d", path)
+      .attr("fill", "none")
+      .attr("stroke", "black");
 
-        g.append("path")
-            .datum({type: "Sphere"})
-            .attr("class", "sphere")
-            .attr("d", path)
-            .attr("fill", "none")
-            .attr("stroke", "black");
+  d3.json("/world-50m.json", function(error, world) {
+    if (error) throw error;
 
-        d3.json("/world-50m.json", function(error, world) {
-          if (error) throw error;
+    g.insert("path", ".graticule")
+        .datum(topojson.feature(world, world.objects.land))
+        .attr("class", "land")
+        .attr("d", path);
 
-          g.insert("path", ".graticule")
-              .datum(topojson.feature(world, world.objects.land))
-              .attr("class", "land")
-              .attr("d", path);
+    g.insert("path", ".graticule")
+        .datum(topojson.mesh(world, world.objects.countries, function(a, b) { return a !== b; }))
+        .attr("class", "boundary")
+        .attr("d", path);
+  });
 
-          g.insert("path", ".graticule")
-              .datum(topojson.mesh(world, world.objects.countries, function(a, b) { return a !== b; }))
-              .attr("class", "boundary")
-              .attr("d", path);
-        });
-
-        </script>
-      </td>
-    </tr>
-  </tbody>
-</table>
+</script>
