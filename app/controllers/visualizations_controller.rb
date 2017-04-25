@@ -10,7 +10,11 @@ class VisualizationsController < ApplicationController
         render :asteroid_bar_chart
       end
       format.json do
-        render json: Asteroid.by_condition_code
+        if use_flat_file
+          render json: File.read("db/seeds/data/asteroids/by_condition_code.json")
+        else
+          render json: Asteroid.by_condition_code
+        end
       end
     end
   end
@@ -21,7 +25,11 @@ class VisualizationsController < ApplicationController
         render :asteroid_pie_chart
       end
       format.json do
-        render json: Asteroid.by_condition_code
+        if use_flat_file
+          render json: File.read("db/seeds/data/asteroids/by_condition_code.json")
+        else
+          render json: Asteroid.by_condition_code
+        end
       end
     end
   end
@@ -32,7 +40,11 @@ class VisualizationsController < ApplicationController
         render :asteroid_scatter_plot
       end
       format.json do
-        render json: Asteroid.perihelion_aphelion_diameter
+        if use_flat_file
+          render json: File.read("db/seeds/data/asteroids/perihelion_aphelion_diameter.json")
+        else
+          render json: Asteroid.perihelion_aphelion_diameter
+        end
         return
         csv = CSV.parse(
           "perihelion,mass,aphelion,petal_width,species
