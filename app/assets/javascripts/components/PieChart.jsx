@@ -11,7 +11,7 @@ class PieChart extends React.Component {
 
   componentDidMount() {
     $.ajax({
-      url: this.props.url,
+      url: this.props.dataUrl,
       dataType: 'json',
       success: function(data) {
         this.setState({data: this.formatData(data)})

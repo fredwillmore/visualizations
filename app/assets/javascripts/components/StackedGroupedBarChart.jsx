@@ -10,7 +10,7 @@ class StackedGroupedBarChart extends React.Component {
 
   componentDidMount() {
     $.ajax({
-      url: this.props.url,
+      dataUrl: this.props.url,
       dataType: 'json',
       success: function(data) {
         this.setState({data: this.formatData(data)})
