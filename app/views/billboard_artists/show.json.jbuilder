@@ -1,0 +1,1 @@
+json.partial! "billboard_artists/billboard_artist", billboard_artist: @billboard_artist

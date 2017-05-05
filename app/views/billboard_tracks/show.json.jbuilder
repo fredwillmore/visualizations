@@ -1,0 +1,1 @@
+json.partial! "billboard_tracks/billboard_track", billboard_track: @billboard_track

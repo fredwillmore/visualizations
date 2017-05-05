@@ -1,0 +1,1 @@
+json.array! @billboard_artists, partial: 'billboard_artists/billboard_artist', as: :billboard_artist

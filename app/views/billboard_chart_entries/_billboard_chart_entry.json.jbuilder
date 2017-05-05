@@ -1,0 +1,2 @@
+json.extract! billboard_chart_entry, :id, :integer, :integer, :integer, :peak_position, :integer, :belongs_to, :belongs_to, :date, :integer, :integer, :integer, :belongs_to, :created_at, :updated_at
+json.url billboard_chart_entry_url(billboard_chart_entry, format: :json)

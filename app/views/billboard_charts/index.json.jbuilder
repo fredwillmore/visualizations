@@ -1,0 +1,1 @@
+json.array! @billboard_charts, partial: 'billboard_charts/billboard_chart', as: :billboard_chart

@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Billboard Tracks</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>String</th>
+      <th>Artist</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @billboard_tracks.each do |billboard_track| %>
+      <tr>
+        <td><%= billboard_track.string %></td>
+        <td><%= billboard_track.billboard_artist %></td>
+        <td><%= link_to 'Show', billboard_track %></td>
+        <td><%= link_to 'Edit', edit_billboard_track_path(billboard_track) %></td>
+        <td><%= link_to 'Destroy', billboard_track, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Billboard track', new_billboard_track_path %>

@@ -14,4 +14,9 @@ module ApplicationHelper
       two: 'Two or More'
     }[code.to_sym]
   end
+
+  def data_file_link link
+    separator = link.include?('?') ? '&' : '?'
+    "#{link}#{controller.use_flat_file ? "#{separator}use_flat_file=true" : ''}"
+  end
 end

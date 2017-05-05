@@ -180,4 +180,39 @@ class VisualizationsController < ApplicationController
     end
   end
 
+  def multi_line_charts
+    respond_to do |format|
+      format.html
+    end
+  end
+
+  def life_expectancy_multi_line_chart
+    respond_to do |format|
+      format.html
+      format.json do
+        if use_flat_file
+          render json: CSV.read('public/life-expectancy-cleaned-all.csv').to_json
+          # render json: File.read("db/seeds/data/life_expectancy/chart_countries.json")
+        else
+          raise NotImplementedError
+        end
+      end
+    end
+  end
+
+  def billboard_multi_line_chart
+    @year = (params[:year] || 1977).to_i
+    respond_to do |format|
+      format.html
+      format.json do
+        if use_flat_file
+          render json: File.read("db/seeds/data/billboard/chart_tracks/#{@year}.json") rescue {}
+        else
+          start_date = Date.new(@year)
+          end_date = Date.new(@year+1)-1
+          render json: BillboardTrack.charting_tracks(start_date, end_date)
+        end
+      end
+    end
+  end
 end

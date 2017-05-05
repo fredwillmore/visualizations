@@ -13,6 +13,14 @@
   <h3><%= link_to "Asteroid Pie Chart", asteroid_pie_chart_visualizations_path(p) %></h3>
   <h3><%= link_to "Asteroid Scatter Plot", asteroid_scatter_plot_visualizations_path(p) %></h3>
   <h3><%= link_to "PSU Engineering Graduate Data - Stacked Grouped Bar Chart", psu_data_visualizations_path(p.merge year: 2016) %></h3>
+  <h3><%= link_to "World Life Expectancy - Multi Line Chart", life_expectancy_multi_line_chart_visualizations_path(p) %></h3>
+  <h3><%= link_to "Billboard Hot 100 Singles - Multi Line Chart", billboard_multi_line_chart_visualizations_path(p.merge year: 1977) %></h3>
+  <p>
+    <% (1940..2012).each do |year|  %>
+      <%= link_to year, billboard_multi_line_chart_visualizations_path(p.merge year: year) %>
+    <% end %>
+  </p>
+  <h3><%= link_to "PSU Engineering Graduate Data - Stacked Grouped Bar Chart", psu_data_visualizations_path(p.merge year: 2016) %></h3>
 
   <%= yield %>
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170319172551) do
+ActiveRecord::Schema.define(version: 20170426091549) do
 
   create_table "asteroids", force: :cascade do |t|
     t.string   "full_name"
@@ -42,6 +42,42 @@ ActiveRecord::Schema.define(version: 20170319172551) do
     t.datetime "updated_at",                               null: false
     t.decimal  "density",        precision: 8,  scale: 8
   end
+
+  create_table "billboard_artists", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "billboard_chart_entries", force: :cascade do |t|
+    t.integer  "position"
+    t.integer  "last_week_position"
+    t.integer  "peak_position"
+    t.integer  "weeks_on_chart"
+    t.integer  "billboard_track_id"
+    t.date     "chart_entry_date"
+    t.integer  "entry_position"
+    t.integer  "overall_peak_position"
+    t.integer  "overall_weeks_on_chart"
+    t.integer  "billboard_chart_id"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "billboard_charts", force: :cascade do |t|
+    t.date     "chart_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "billboard_tracks", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "billboard_artist_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
+  add_index "billboard_tracks", ["billboard_artist_id"], name: "index_billboard_tracks_on_billboard_artist_id"
 
   create_table "business_entities", force: :cascade do |t|
     t.string "structure"

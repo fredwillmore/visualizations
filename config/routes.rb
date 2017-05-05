@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  resources :billboard_charts
+  resources :billboard_chart_entries
+  resources :billboard_tracks
+  resources :billboard_artists
   resources :comets
   resources :asteroids
   resources :business_entities
@@ -8,6 +12,9 @@ Rails.application.routes.draw do
       get 'asteroid_pie_chart'
       get 'asteroid_scatter_plot'
       get 'psu_data'
+      get 'multi_line_charts'
+      get 'billboard_multi_line_chart'
+      get 'life_expectancy_multi_line_chart'
     end
   end
   # The priority is based upon order of creation: first created -> highest priority.

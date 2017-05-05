@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>String:</strong>
+  <%= @billboard_track.string %>
+</p>
+
+<p>
+  <strong>Artist:</strong>
+  <%= @billboard_track.artist %>
+</p>
+
+<%= link_to 'Edit', edit_billboard_track_path(@billboard_track) %> |
+<%= link_to 'Back', billboard_tracks_path %>

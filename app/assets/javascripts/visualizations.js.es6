@@ -12,8 +12,12 @@ function getScale(scaleName){
     case 'scaleBand':
       return d3.scaleBand();
     case 'color':
-    case 'colorScale':
+    case 'scaleColor':
       return d3.scaleOrdinal(d3.schemeCategory10);
+    case 'time':
+    case 'date':
+    case 'scaleTime':
+      return d3.scaleTime();
     case 'linear':
     case 'scaleLinear':
     default:
@@ -45,3 +49,11 @@ function wrap(text, width) {
     }
   });
 }
+
+function zoomed() {
+  view.attr("transform", d3.event.transform);
+  gX.call(xAxis.scale(d3.event.transform.rescaleX(x)));
+  gY.call(yAxis.scale(d3.event.transform.rescaleY(y)));
+}
+
+var zoom = d3.zoom().scaleExtent([1, 40]).translateExtent([[-100, -100], [1000 + 90, 500 + 100]]).on("zoom", zoomed);
