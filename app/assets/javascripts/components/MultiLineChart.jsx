@@ -51,10 +51,22 @@ class MultiLineChart extends React.Component {
   }
 
   updateHeaderText(d = null) {
-    this.setState({
-      headerText: d ? this.getHeaderText(d) : this.props.headerText,
-      subHeaderText: d ? this.getSubheaderText(d) : this.props.subHeaderText
-    })
+    var newState = {}
+    if(d){
+      newState.headerText = this.getHeaderText(d)
+      newState.subHeaderText = this.getSubheaderText(d)
+    } else {
+      if(this.state.clickedItemID && (item = this.state.data.filter((v) => v.id == this.state.clickedItemID)[0])){
+        newState.headerText = this.getHeaderText(item)
+        newState.subHeaderText = this.getSubheaderText(item)
+      } else {
+        console.log(this.state.clickedItemID)
+        newState.headerText = this.props.headerText
+        newState.subHeaderText = this.props.subHeaderText
+      }
+    }
+
+    this.setState(newState)
   }
 
   xZoom(){
@@ -171,7 +183,12 @@ class MultiLineChart extends React.Component {
       .x((d) => this.xScale(d.x || 0))
       .y((d) => this.yScale(d.y || 0))
     return (
-      <div>
+      <div onClick = {() => {
+        this.setState({
+          clickedItemID: null,
+          highlightedItemID: null
+        })
+      }} >
         <h2>{this.state.headerText}</h2>
         <p>{this.state.subHeaderText}</p>
         { /* TODO: eventually this should be controlled by natural zooming actions (scrolling, selecting or gestures) */ }
@@ -191,18 +208,50 @@ class MultiLineChart extends React.Component {
             <svg width={this.state.innerWidth} height={this.state.innerHeight}>
               <ReactTransitionGroup component="g" className="view">
                 {
-                  this.state.data.map((d, i) => (
-                    <Line
-                      // TODO: abstract out references to CountryCode
-                      key = {i}
-                      data = {{country: d.CountryCode}}
-                      baseClassName = {`line ${d.CountryCode}`}
-                      mouseOverClassName = {`line ${d.CountryCode} current`}
-                      onMouseOverCallback = { () => this.updateHeaderText(d) }
-                      onMouseOutCallback = { () => this.updateHeaderText() }
-                      d = {line(d.values)}
-                    />
-                  ))
+                  this.state.data.map((d, i) => {
+                    // temp filtering to make testing easier with 1980 data
+                    // if([
+                    //   "JOURNEY",
+                    //   "MICHAEL JACKSON",
+                    //   "BOB SEGER",
+                    //   "TOM PETTY AND THE HEARTBREAKERS",
+                    //   "QUEEN"
+                    // ].indexOf(d.billboard_artist.name) > 0){
+                      return (
+                      <Line
+                        key = {i}
+                        className = { toString([
+                          'line',
+                          (this.props.getHighlightedItemID(d) == this.state.highlightedItemID) ? 'highlight' : '',
+                          (this.props.getClickedItemID(d) == this.state.clickedItemID) ? 'clicked' : '',
+                          (this.props.getCurrentItemID(d) == this.state.currentItemID) ? 'current' : '',
+                        ]) }
+                        onMouseOverCallback = { () => {
+                          this.updateHeaderText(d)
+                          this.setState({
+                            currentItemID: this.props.getCurrentItemID(d)
+                          })
+                        } }
+                        onMouseOutCallback = { () => {
+                          this.updateHeaderText()
+                          this.setState({
+                            currentItemID: null
+                          })
+                        }}
+                        onClickCallback = { (event) => {
+                          event.stopPropagation()
+                          this.setState({
+                            clickedItemID: this.props.getClickedItemID(d),
+                            highlightedItemID: this.props.getHighlightedItemID(d),
+                            headerText: this.getHeaderText(d),
+                            subheaderText: this.getSubheaderText(d)
+                          })
+                        } }
+                        d = { line(d.values) }
+                      />
+                    )
+                  // }
+                  })
                 }
               </ReactTransitionGroup>
             </svg>
@@ -246,5 +295,8 @@ MultiLineChart.defaultProps = {
   yTicks: 5,
   yTickFormat: null,
   zoomFactor: .1,
-  panFactor: .1
+  panFactor: .1,
+  // getClassName: (d) => d.billboard_artist.id, // TODO: move this to billboard
+  getHighlightedItemID: (d) => d.billboard_artist.id, // TODO: move this to billboard
+  getClickedItemID: (d) => d.id
 }

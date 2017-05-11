@@ -57,3 +57,34 @@ function zoomed() {
 }
 
 var zoom = d3.zoom().scaleExtent([1, 40]).translateExtent([[-100, -100], [1000 + 90, 500 + 100]]).on("zoom", zoomed);
+
+function toArray(s=null, splitOn=/\s+/) {
+  if(Array.isArray(s)){
+    return s
+  }
+  return s ? s.toString().trim(splitOn).split(splitOn) : []
+}
+
+function toUnique(a){
+  return toArray(a).filter((value, index, self) => self.indexOf(value) === index)
+}
+
+function inArray(a, e) {
+  return toArray(a).indexOf(e) >= 0
+}
+
+function toString(a){
+  return toArray(a).join(' ')
+}
+
+function addToList(list, str){
+  return toString(toUnique(toArray(list).concat(toArray(str))))
+}
+
+function removeFromList(list, e){
+  return toString(removeFromArray(toArray(list), e))
+}
+
+function removeFromArray(a, e){
+  return a.filter((c) => !inArray(toArray(e), c))
+}

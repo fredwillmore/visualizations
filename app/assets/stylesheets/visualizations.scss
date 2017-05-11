@@ -36,11 +36,17 @@
 #filters a.NAC{background:#be1932;color:#fff;}
 #vis{min-height:550px;}
 #blurb{height:60px;border-top:1px solid #e2e2e2;padding-top:20px;}
-path{stroke:#e2e2e2;stroke-width:1;fill:none;}
-path.current, path.highlight.current{
-  stroke:#000;
-  stroke-width:1.7;
+path{stroke:#e2e2e2;stroke-width:2;fill:none;}
+
+path.highlight {
+  stroke:#ED7C31;
+  stroke-width:2;
 }
+path.current, path.clicked{
+  stroke:#000;
+  stroke-width:3;
+}
+
 .SAS.highlight{stroke:#895881;}
 .ECS.highlight{stroke:#ED7C31;}
 .MEA.highlight{stroke:#82A5C0;}

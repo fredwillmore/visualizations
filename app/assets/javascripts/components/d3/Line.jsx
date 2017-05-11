@@ -22,10 +22,13 @@ class Line extends React.Component {
     return (
       <Path
         data = {this.props.data}
-        baseClassName = {this.props.baseClassName}
+        className = {this.props.className}
+        relatedClassName = {this.props.relatedClassName}
         mouseOverClassName = {this.props.mouseOverClassName}
+        clickedClassName = {this.props.clickedClassName}
         onMouseOverCallback = {this.props.onMouseOverCallback}
         onMouseOutCallback = {this.props.onMouseOutCallback}
+        onClickCallback = {this.props.onClickCallback}
       />
     )
   }

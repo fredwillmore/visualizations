@@ -13,8 +13,8 @@ class BillboardMultiLineChart extends React.Component {
         xMax = {new Date(Date.parse(this.props.endDate))}
         yMin = {this.props.yMin}
         yMax = {this.props.yMax}
-        width = {1000}
-        height = {500}
+        width = {1200}
+        height = {600}
         xScale = {this.props.xScale}
         xTicks = {this.props.xTicks}
         xTickFormat = {this.props.xTickFormat}
@@ -22,9 +22,11 @@ class BillboardMultiLineChart extends React.Component {
         yTickFormat = {this.props.yTickFormat}
         getHeaderText = {(d) => `${d.billboard_artist.name} - ${d.name}`}
         getSubheaderText = {(d) => `Entered the charts on ${new Date(Date.parse(d.entry_date)).toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric' })}. On the chart for a total of ${d.weeks} weeks. Peaked at number ${d.peak}.` }
+        getCurrentItemID = {(d) => d.id}
         formatData = {(data) => {
           formattedData = data.map((d) => {
             val = {
+              id: d.id,
               billboard_artist: d.billboard_artist,
               name: d.name,
               entry_date: d.entry_date,
@@ -38,6 +40,7 @@ class BillboardMultiLineChart extends React.Component {
           })
           return formattedData
         }}
+
       ></MultiLineChart>
     )
   }

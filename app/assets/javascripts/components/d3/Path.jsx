@@ -3,17 +3,25 @@ class Path extends React.Component {
     super(props)
     this.handleMouseOver = this.handleMouseOver.bind(this)
     this.handleMouseOut = this.handleMouseOut.bind(this)
+    this.handleClick = this.handleClick.bind(this)
     this.state = {className: this.props.className}
   }
 
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({className: nextProps.className})
+  }
+
   handleMouseOver() {
-    this.setState({className: this.props.mouseOverClassName})
     this.props.onMouseOverCallback()
   }
 
   handleMouseOut() {
-    this.setState({className: this.props.className})
     this.props.onMouseOutCallback()
+  }
+
+  handleClick(event) {
+    this.props.onClickCallback(event)
   }
 
   render() {
@@ -24,6 +32,7 @@ class Path extends React.Component {
         d = {this.props.d}
         onMouseOver = {this.handleMouseOver}
         onMouseOut = {this.handleMouseOut}
+        onClick = {this.handleClick}
       />
     )
   }
