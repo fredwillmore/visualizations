@@ -31,7 +31,7 @@ class LifeExpectancyMultiLineChart extends React.Component {
           })
           return formattedData
         }}
-        getHeaderText = {(d) => d.CountryName}
+        getHeaderText = {(d) => `${d.CountryName} - ${d.RegionName.replace(/&amp;/g, '&')}`}
         getSubheaderText = {(d) => {
           var startVal = d.values[0].y,
             endVal = d.values[d.values.length-1].y,
