@@ -19,12 +19,10 @@ class MultiLineChart extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if([nextProps.xMin, nextProps.yMin] != [this.state.xMin, this.state.yMin]){
-      this.setState({
-        xMin: nextProps.xMin,
-        yMin: nextProps.yMin
-      })
-    }
+    this.setState({
+      xMin: nextProps.xMin,
+      yMin: nextProps.yMin
+    })
   }
 
   componentDidMount() {
@@ -56,11 +54,10 @@ class MultiLineChart extends React.Component {
       newState.headerText = this.getHeaderText(d)
       newState.subHeaderText = this.getSubheaderText(d)
     } else {
-      if(this.state.clickedItemID && (item = this.state.data.filter((v) => v.id == this.state.clickedItemID)[0])){
+      if(this.state.clickedItemID && (item = this.state.data.filter((v) => this.props.getClickedItemID(v) == this.state.clickedItemID)[0])){
         newState.headerText = this.getHeaderText(item)
         newState.subHeaderText = this.getSubheaderText(item)
       } else {
-        console.log(this.state.clickedItemID)
         newState.headerText = this.props.headerText
         newState.subHeaderText = this.props.subHeaderText
       }
@@ -106,7 +103,8 @@ class MultiLineChart extends React.Component {
     }
   }
 
-  crudeZoomIn() {
+  crudeZoomIn(event) {
+    event.stopPropagation()
     var newState = {
       xMin: this.xScale.invert(this.xZoom()),
       xMax: this.xScale.invert(this.state.innerWidth - this.xZoom()),
@@ -116,7 +114,8 @@ class MultiLineChart extends React.Component {
     this.setState(newState)
   }
 
-  crudeZoomOut() {
+  crudeZoomOut(event) {
+    event.stopPropagation()
     var newState = {
       xMin: this.xMin(),
       xMax: this.xMax(),
@@ -161,19 +160,23 @@ class MultiLineChart extends React.Component {
     }
   }
 
-  crudePanLeft() {
+  crudePanLeft(event) {
+    event.stopPropagation()
     this.pan(this.panAmount('left'))
   }
 
-  crudePanRight() {
+  crudePanRight(event) {
+    event.stopPropagation()
     this.pan(this.panAmount('right'))
   }
 
-  crudePanUp() {
+  crudePanUp(event) {
+    event.stopPropagation()
     this.tilt(this.panAmount('up'))
   }
 
-  crudePanDown() {
+  crudePanDown(event) {
+    event.stopPropagation()
     this.tilt(this.panAmount('down'))
   }
 
@@ -228,9 +231,7 @@ class MultiLineChart extends React.Component {
                         ]) }
                         onMouseOverCallback = { () => {
                           this.updateHeaderText(d)
-                          this.setState({
-                            currentItemID: this.props.getCurrentItemID(d)
-                          })
+                          this.setState({ currentItemID: this.props.getCurrentItemID(d) })
                         } }
                         onMouseOutCallback = { () => {
                           this.updateHeaderText()
@@ -296,7 +297,5 @@ MultiLineChart.defaultProps = {
   yTickFormat: null,
   zoomFactor: .1,
   panFactor: .1,
-  // getClassName: (d) => d.billboard_artist.id, // TODO: move this to billboard
-  getHighlightedItemID: (d) => d.billboard_artist.id, // TODO: move this to billboard
-  getClickedItemID: (d) => d.id
+  getHighlightedItemID: (d) => {}
 }

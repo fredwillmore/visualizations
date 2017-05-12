@@ -191,8 +191,8 @@ class VisualizationsController < ApplicationController
       format.html
       format.json do
         if use_flat_file
-          render json: CSV.read('public/life-expectancy-cleaned-all.csv').to_json
-          # render json: File.read("db/seeds/data/life_expectancy/chart_countries.json")
+          # render json: CSV.read('public/life-expectancy-cleaned-all.csv').to_json
+          render json: File.read("db/seeds/data/life_expectancy/chart_countries.json")
         else
           raise NotImplementedError
         end
