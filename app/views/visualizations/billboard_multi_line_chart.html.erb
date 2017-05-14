@@ -1,7 +1,8 @@
 <%= react_component 'BillboardMultiLineChart',
       dataUrl: data_file_link("/visualizations/billboard_multi_line_chart.json?year=#{@year}"),
-      headerText: "Billboard Top 100 for #{@year}",
+      headerText: "Billboard Top #{@chart_length} for #{@year}",
       subHeaderText: 'these are things you wanted to know',
       startDate: "#{@year}-01-01",
-      endDate: "#{@year}-12-31"
+      endDate: "#{@year}-12-31",
+      yMin: params[:chart_length]
 %>

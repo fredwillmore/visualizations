@@ -43,7 +43,8 @@ class BillboardMultiLineChart extends React.Component {
         getHighlightedItemID = {(d) => d.billboard_artist.id}
         getClickedItemID = {(d) => d.id}
 
-      ></MultiLineChart>
+      >
+      </MultiLineChart>
     )
   }
 }

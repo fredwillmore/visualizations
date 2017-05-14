@@ -1,5 +1,6 @@
 class VisualizationsController < ApplicationController
   require 'csv'
+
   def index
     @asteroids_by_condition_code = Asteroid.by_condition_code
   end
@@ -167,9 +168,9 @@ class VisualizationsController < ApplicationController
         render :psu_data
       end
       format.json do
-        parsed_file = CSV.read("#{Rails.root}/db/seeds/data/graduates/portland_state/#{params[:year] || 2016}.tsv", { col_sep: "\t", headers: true })
+        parsed_file = CSV.read("#{Rails.root}/db/seeds/data/graduates/portland_state/#{visualizations_params[:year] || 2016}.tsv", { col_sep: "\t", headers: true })
         result = parsed_file.map(&:to_h)
-        json = case params[:type]
+        json = case visualizations_params[:type]
           when 'by_program_male'
             result
           else
@@ -200,7 +201,8 @@ class VisualizationsController < ApplicationController
   end
 
   def billboard_multi_line_chart
-    @year = (params[:year] || 1977).to_i
+    @year = visualizations_params[:year].to_i
+    @chart_length = visualizations_params[:chart_length]
     respond_to do |format|
       format.html
       format.json do
@@ -213,5 +215,15 @@ class VisualizationsController < ApplicationController
         end
       end
     end
+  end
+
+  private
+
+  def visualizations_params
+    params[:use_flat_file] ||= use_flat_file
+    params[:year] ||= 1977
+    params[:chart_length] ||= 40
+
+    params
   end
 end
