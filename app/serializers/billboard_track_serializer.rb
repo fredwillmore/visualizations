@@ -1,9 +1,9 @@
 class BillboardTrackSerializer < ActiveModel::Serializer
-  attributes :id, :name, :trajectory, :entry_date, :peak, :weeks
+  attributes :id, :name, :trajectories, :entry_date, :peak, :weeks
   has_one :billboard_artist
 
-  def trajectory
-    @object.chart_trajectory
+  def trajectories
+    @object.chart_trajectories
   end
 
   def entry_date

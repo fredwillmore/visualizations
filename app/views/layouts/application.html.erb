@@ -20,7 +20,7 @@
     <%= link_to "Top 100", billboard_multi_line_chart_visualizations_path(params.merge chart_length: 100) %>
   </p>
   <p>
-    <% (1940..2012).each do |year|  %>
+    <% (1940..2015).each do |year|  %>
       <%= link_to year, billboard_multi_line_chart_visualizations_path(params.merge year: year) %>
     <% end %>
   </p>

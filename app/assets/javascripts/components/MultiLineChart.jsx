@@ -220,38 +220,42 @@ class MultiLineChart extends React.Component {
                     //   "TOM PETTY AND THE HEARTBREAKERS",
                     //   "QUEEN"
                     // ].indexOf(d.billboard_artist.name) > 0){
-                      return (
-                      <Line
-                        key = {i}
-                        className = { toString([
-                          'line',
-                          (this.props.getHighlightedItemID(d) == this.state.highlightedItemID) ? 'highlight' : '',
-                          (this.props.getClickedItemID(d) == this.state.clickedItemID) ? 'clicked' : '',
-                          (this.props.getCurrentItemID(d) == this.state.currentItemID) ? 'current' : '',
-                        ]) }
-                        onMouseOverCallback = { () => {
-                          this.updateHeaderText(d)
-                          this.setState({ currentItemID: this.props.getCurrentItemID(d) })
-                        } }
-                        onMouseOutCallback = { () => {
-                          this.updateHeaderText()
-                          this.setState({
-                            currentItemID: null
-                          })
-                        }}
-                        onClickCallback = { (event) => {
-                          event.stopPropagation()
-                          this.setState({
-                            clickedItemID: this.props.getClickedItemID(d),
-                            highlightedItemID: this.props.getHighlightedItemID(d),
-                            headerText: this.getHeaderText(d),
-                            subheaderText: this.getSubheaderText(d)
-                          })
-                        } }
-                        d = { line(d.values) }
-                      />
-                    )
-                  // }
+                    // if(d.name == "All I Want For Christmas Is You"){
+                      // console.log(d.name)
+                      return d.values.map((values, key) => (
+                        <Line
+                          key = {i + '_' + key}
+                          className = { toString([
+                            'line',
+                            (this.props.getHighlightedItemID(d) == this.state.highlightedItemID) ? 'highlight' : '',
+                            (this.props.getClickedItemID(d) == this.state.clickedItemID) ? 'clicked' : '',
+                            (this.props.getCurrentItemID(d) == this.state.currentItemID) ? 'current' : '',
+                          ]) }
+                          onMouseOverCallback = { () => {
+                            this.updateHeaderText(d)
+                            this.setState({ currentItemID: this.props.getCurrentItemID(d) })
+                          } }
+                          onMouseOutCallback = { () => {
+                            this.updateHeaderText()
+                            this.setState({
+                              currentItemID: null
+                            })
+                          }}
+                          onClickCallback = { (event) => {
+                            event.stopPropagation()
+                            this.setState({
+                              clickedItemID: this.props.getClickedItemID(d),
+                              highlightedItemID: this.props.getHighlightedItemID(d),
+                              headerText: this.getHeaderText(d),
+                              subheaderText: this.getSubheaderText(d)
+                            })
+                          } }
+                          d = {() => {
+                            return line(values)
+                          }}
+                        />
+                      ))
+                    // }
                   })
                 }
               </ReactTransitionGroup>

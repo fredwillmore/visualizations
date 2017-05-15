@@ -32,8 +32,10 @@ class BillboardMultiLineChart extends React.Component {
               entry_date: d.entry_date,
               peak: d.peak,
               weeks: d.weeks,
-              values: d.trajectory.map((entry) => {
-                return {x: new Date(Date.parse(entry.x)), y: entry.y}
+              values: d.trajectories.map((trajectory) => {
+                return trajectory.map((entry) => {
+                  return {x: new Date(Date.parse(entry.x)), y: entry.y}
+                })
               })
             }
             return val
