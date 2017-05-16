@@ -15,7 +15,7 @@ class BillboardTrack < ActiveRecord::Base
     entries.each do |e|
       previous = current
       current = e
-      if previous && current.chart_date.to_date - previous.chart_date.to_date > 7
+      if previous && current.chart_date.to_date - previous.chart_date.to_date > 10 # a "baker's week"
         if current_trajectory.count > 0
           trajectories << current_trajectory
           current_trajectory = []

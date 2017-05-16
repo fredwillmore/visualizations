@@ -221,8 +221,8 @@ class MultiLineChart extends React.Component {
                     //   "QUEEN"
                     // ].indexOf(d.billboard_artist.name) > 0){
                     // if(d.name == "All I Want For Christmas Is You"){
-                      // console.log(d.name)
-                      return d.values.map((values, key) => (
+                      var line_values = isNaN(d.values[0].x) ? d.values : [d.values]
+                      return line_values.map((values, key) => (
                         <Line
                           key = {i + '_' + key}
                           className = { toString([
