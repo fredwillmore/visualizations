@@ -13,7 +13,7 @@ class Line extends React.Component {
 
   triggerTransitions() {
     var node = d3.select(ReactDOM.findDOMNode(this))
-      .transition()
+    node.transition()
         .duration(this.props.transitionDuration)
         .attr('d', this.props.d)
   }
@@ -29,6 +29,7 @@ class Line extends React.Component {
         onMouseOverCallback = {this.props.onMouseOverCallback}
         onMouseOutCallback = {this.props.onMouseOutCallback}
         onClickCallback = {this.props.onClickCallback}
+        strokeColor = {this.props.strokeColor}
       />
     )
   }

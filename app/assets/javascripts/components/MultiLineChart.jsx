@@ -253,6 +253,7 @@ class MultiLineChart extends React.Component {
                           d = {() => {
                             return line(values)
                           }}
+                          strokeColor = {this.props.strokeColor(d)}
                         />
                       ))
                     // }
@@ -301,5 +302,6 @@ MultiLineChart.defaultProps = {
   yTickFormat: null,
   zoomFactor: .1,
   panFactor: .1,
-  getHighlightedItemID: (d) => {}
+  getHighlightedItemID: (d) => {},
+  strokeColor: (d) => '#999'
 }

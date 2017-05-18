@@ -4,7 +4,10 @@ class Path extends React.Component {
     this.handleMouseOver = this.handleMouseOver.bind(this)
     this.handleMouseOut = this.handleMouseOut.bind(this)
     this.handleClick = this.handleClick.bind(this)
-    this.state = {className: this.props.className}
+    this.state = {
+      className: this.props.className,
+      strokeColor: this.props.strokeColor
+    }
   }
 
 
@@ -33,6 +36,7 @@ class Path extends React.Component {
         onMouseOver = {this.handleMouseOver}
         onMouseOut = {this.handleMouseOut}
         onClick = {this.handleClick}
+        stroke = {this.state.strokeColor}
       />
     )
   }

@@ -1,6 +1,10 @@
 class LifeExpectancyMultiLineChart extends React.Component {
   constructor (props) {
     super(props)
+
+    // this.state = {
+    //   colorScale: d3.scaleLinear().domain([3,8]).range(["darkblue","orange"])(d.WellBeing)
+    // }
   }
 
   render () {
@@ -45,16 +49,24 @@ class LifeExpectancyMultiLineChart extends React.Component {
         getHighlightedItemID = {(d) => d.RegionCode }
         getCurrentItemID = {(d) => d.CountryCode}
         getClickedItemID = {(d) => d.CountryCode}
+        strokeColor = {(d) => {
+          if(isNaN(d.WellBeing)){
+            return d3.color('lightgray')
+          } else {
+            return d3.scaleLinear().domain([4,8]).range(["darkgreen","lightgreen"])(d.WellBeing)
+          }
+        }}
       ></MultiLineChart>
     )
   }
+
 }
 
 LifeExpectancyMultiLineChart.defaultProps = {
   xMin: 1960,
   xMax: 2010,
   yMin: 20,
-  yMax: 80,
+  yMax: 90,
   width: 925,
   height: 550,
 }

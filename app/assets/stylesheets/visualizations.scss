@@ -36,7 +36,12 @@
 #filters a.NAC{background:#be1932;color:#fff;}
 #vis{min-height:550px;}
 #blurb{height:60px;border-top:1px solid #e2e2e2;padding-top:20px;}
-path{stroke:#e2e2e2;stroke-width:2;fill:none;}
+
+path{
+  // stroke:#e2e2e2;
+  stroke-width:2;
+  fill:none;
+}
 
 path.highlight {
   stroke:#ED7C31;
