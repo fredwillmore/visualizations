@@ -20,6 +20,8 @@ class BillboardMultiLineChart extends React.Component {
         xTickFormat = {this.props.xTickFormat}
         yTicks = {this.props.yTicks}
         yTickFormat = {this.props.yTickFormat}
+        xAxisLabelText = {this.props.xAxisLabelText}
+        yAxisLabelText = {this.props.yAxisLabelText}
         getHeaderText = {(d) => `${d.billboard_artist.name} - ${d.name}`}
         getSubheaderText = {(d) => `Entered the charts on ${new Date(Date.parse(d.entry_date)).toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric' })}. On the chart for a total of ${d.weeks} weeks. Peaked at number ${d.peak}.` }
         getCurrentItemID = {(d) => d.id}
@@ -58,5 +60,7 @@ BillboardMultiLineChart.defaultProps = {
   xTicks: 12,
   // xTickFormat: (d) => new Date(d).toLocaleDateString("en-US", { month: 'long', day: 'numeric' })
   yTicks: 100,
-  yTickFormat: (d) => (d == 1 || 0 == d%10) ? d : ''
+  yTickFormat: (d) => (d == 1 || 0 == d%10) ? d : '',
+  xAxisLabelText: 'Date',
+  yAxisLabelText: 'Chart Position'
 }

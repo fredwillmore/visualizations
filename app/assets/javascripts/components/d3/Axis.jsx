@@ -34,14 +34,40 @@ class Axis extends React.Component {
     }
   }
 
+  isX() {
+    return this.props.axisType == 'x'
+  }
+
+  isY() {
+    return this.props.axisType == 'y'
+  }
+
+  textTransform() {
+    return this.isX() ? `translate(${this.props.width/2}, ${this.props.height + this.props.labelOffset})` : `translate(-${this.props.labelOffset}, ${this.props.height/2}) rotate(-90)`
+  }
+
+  axisTransform() {
+    return this.isX() ? `translate(0, ${this.props.height})` : ''
+  }
+
   render(){
     return (
-      <g
-        className = {this.props.className}
-        ref="axis"
-        transform = {this.props.transform}
-        width = {this.props.width}
-      />
+      <g>
+        <g
+          className = {this.props.className}
+          ref="axis"
+          transform = {this.axisTransform()}
+          width = {this.props.width}
+        >
+        </g>
+        <text
+          className = "label"
+          textAnchor = 'middle'
+          transform = {this.textTransform()}
+        >
+          {this.props.labelText}
+        </text>
+      </g>
     )
   }
 }
@@ -51,3 +77,35 @@ Axis.defaultProps = {
   ticks: 10,
   tickFormat: (t) => t.toString()
 }
+
+// TODO: the whole switch-on-type things happening to differentiate x and y axes is a code smell that indicates a need for dependency injection
+// I don't think this is the right way to do it, but I'll just leave it here until it starts to smell bad
+
+// class XAxis extends React.Component {
+//   constructor (props) {
+//     super(props)
+//   }
+//
+//   render() {
+//     return (
+//       <Axis
+//         axisType = 'x'
+//         className = {this.props.className}
+//         scale = {this.props.scale}
+//         axis = {this.props.axis}
+//         tickFormat = {this.props.tickFormat}
+//         labelText = {this.props.labelText}
+//         labelOffset = {this.props.labelOffset}
+//         width = {this.props.width}
+//         height = {this.props.height}
+//       >
+//       </Axis>
+//     )
+//   }
+// }
+//
+// XAxis.defaultProps = {
+//   className: "x axis",
+//   tickFormat: (t) => t.toString(),
+//   axis: ''
+// }

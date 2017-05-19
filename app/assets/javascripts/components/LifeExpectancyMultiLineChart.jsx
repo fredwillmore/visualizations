@@ -1,13 +1,14 @@
 class LifeExpectancyMultiLineChart extends React.Component {
   constructor (props) {
     super(props)
+  }
 
-    // this.state = {
-    //   colorScale: d3.scaleLinear().domain([3,8]).range(["darkblue","orange"])(d.WellBeing)
-    // }
+  createScales() {
+    this.colorScale = d3.scaleLinear().domain([1,10]).range(["darkgreen","lightgreen"])
   }
 
   render () {
+    this.createScales()
     return (
       <MultiLineChart
         dataUrl = {this.props.dataUrl}
@@ -18,6 +19,8 @@ class LifeExpectancyMultiLineChart extends React.Component {
         yMin = {this.props.yMin}
         yMax = {this.props.yMax}
         xTickFormat = {(d) => d.toString()}
+        xAxisLabelText = {this.props.xAxisLabelText}
+        yAxisLabelText = {this.props.yAxisLabelText}
         formatData = {(data) => {
           var headers = data[0]
           formattedData = data.slice(1, data.length).map((d) => {
@@ -50,13 +53,29 @@ class LifeExpectancyMultiLineChart extends React.Component {
         getCurrentItemID = {(d) => d.CountryCode}
         getClickedItemID = {(d) => d.CountryCode}
         strokeColor = {(d) => {
-          if(isNaN(d.WellBeing)){
-            return d3.color('lightgray')
+          if(isNaN(d[this.props.colorIndex])){
+            return d3.color(this.props.strokeColorDefault)
           } else {
-            return d3.scaleLinear().domain([4,8]).range(["darkgreen","lightgreen"])(d.WellBeing)
+            return this.colorScale(d[this.props.colorIndex])
           }
         }}
-      ></MultiLineChart>
+      >
+        <defs>
+          <linearGradient id="grad1" x1="0%" y1="0" x2="100%" y2="0">
+            <stop offset="0%" stopColor = {this.props.strokeColorLower} stopOpacity = {1} />
+            <stop offset="100%" stopColor = {this.props.strokeColorUpper} stopOpacity = {1} />
+          </linearGradient>
+        </defs>
+        <g transform="translate(30,30)">
+          <text x="0" y="0" textAnchor="start" fontWeight="bold">{this.props.colorIndexDescription}</text>
+          <rect y="7" width="160" height="18" fill="url(#grad1)" stroke='darkgray'></rect>
+          <text x="0" y="40" textAnchor="start">{this.colorScale.domain()[0]}</text>
+          <text x="160" y="40" textAnchor="end">{this.colorScale.domain()[1]}</text>
+
+          <rect x="180" y="7" width="18" height="18" fill={this.props.strokeColorDefault} stroke='darkgray'></rect>
+          <text x="189" y="40" textAnchor="middle">n/a</text>
+        </g>
+      </MultiLineChart>
     )
   }
 
@@ -69,4 +88,11 @@ LifeExpectancyMultiLineChart.defaultProps = {
   yMax: 90,
   width: 925,
   height: 550,
+  colorIndex: 'WellBeing',
+  colorIndexDescription: 'Well Being Index',
+  strokeColorDefault: 'lightgray',
+  strokeColorLower: 'darkgreen',
+  strokeColorUpper: 'lightgreen',
+  xAxisLabelText: 'Year',
+  yAxisLabelText: 'Average Lifespan By Country'
 }

@@ -84,33 +84,29 @@ class ScatterPlot extends React.Component {
           </g>
 
           <Axis
+            axisType = 'x'
             className = "x axis"
-            transform = {`translate(0, ${this.innerHeight})`}
             scale = {this.xScale}
             axis = {d3.axisBottom}
             tickFormat = ",.01f"
-          />
-          <text
-            className = "label"
-            style = {{textAnchor: 'middle'}}
-            x = {this.innerWidth / 2}
-            y = {this.innerHeight + this.props.xAxisLabelOffset}
+            labelText = {this.props.xAxisLabelText}
+            labelOffset = {this.props.xAxisLabelOffset}
+            width = {this.innerWidth}
+            height = {this.innerHeight}
           >
-            {this.props.xAxisLabelText}
-          </text>
+          </Axis>
+
           <Axis
+            axisType = 'y'
             className = "y axis"
             scale = {this.yScale}
             axis = {d3.axisLeft}
             tickFormat = ",.0f"
+            width = {this.innerWidth}
+            height = {this.innerHeight}
+            labelText = {this.props.yAxisLabelText}
+            labelOffset = {this.props.yAxisLabelOffset}
           />
-          <text
-            className = "label"
-            transform = {`translate(-${this.props.yAxisLabelOffset},${this.innerHeight / 2}) rotate(-90)`}
-            style = {{textAnchor: 'middle'}}
-          >
-            {this.props.yAxisLabelText}
-          </text>
         </g>
       </svg>
 

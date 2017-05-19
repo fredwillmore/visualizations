@@ -260,19 +260,30 @@ class MultiLineChart extends React.Component {
                   })
                 }
               </ReactTransitionGroup>
+              {this.props.children}
             </svg>
             <Axis
+              axisType = 'x'
               transform = {`translate(0, ${this.state.innerHeight})`}
               scale = {this.xScale}
               axis = {d3.axisBottom}
               ticks = {this.props.xTicks}
               tickFormat = {this.props.xTickFormat}
+              width = {this.state.innerWidth}
+              height = {this.state.innerHeight}
+              labelText = {this.props.xAxisLabelText}
+              labelOffset = {this.props.xAxisLabelOffset}
               />
             <Axis
+              axisType = 'y'
               scale = {this.yScale}
               axis = {d3.axisLeft}
               ticks = {this.props.yTicks}
               tickFormat = {this.props.yTickFormat}
+              width = {this.state.innerWidth}
+              height = {this.state.innerHeight}
+              labelText = {this.props.yAxisLabelText}
+              labelOffset = {this.props.yAxisLabelOffset}
               />
           </g>
         </svg>
@@ -283,7 +294,7 @@ class MultiLineChart extends React.Component {
 }
 
 MultiLineChart.defaultProps = {
-  margin: {top: 30, right: 30, bottom: 30, left: 30},
+  margin: {top: 30, right: 30, bottom: 30, left: 40},
   width: 925,
   height: 550,
   headerText: 'Default Header Text',
@@ -303,5 +314,7 @@ MultiLineChart.defaultProps = {
   zoomFactor: .1,
   panFactor: .1,
   getHighlightedItemID: (d) => {},
-  strokeColor: (d) => '#999'
+  strokeColor: (d) => '#e2e2e2',
+  xAxisLabelOffset: 30,
+  yAxisLabelOffset: 30
 }
