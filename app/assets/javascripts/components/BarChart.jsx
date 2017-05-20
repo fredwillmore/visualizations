@@ -1,10 +1,11 @@
 class BarChart extends React.Component {
   constructor (props) {
     super(props)
-    this.state = { data: [] }
-    // set the dimensions and margins of the graph
-    this.innerWidth = props.width - props.margin.left - props.margin.right;
-    this.innerHeight = props.height - props.margin.top - props.margin.bottom;
+    this.state = {
+      data: [],
+      innerWidth: props.width - props.margin.left - props.margin.right,
+      innerHeight: props.height - props.margin.top - props.margin.bottom
+    }
   }
 
   componentDidMount() {
@@ -29,11 +30,11 @@ class BarChart extends React.Component {
 
   createScales(){
     this.xScale = d3.scaleBand()
-      .range([0, this.innerWidth])
+      .range([0, this.state.innerWidth])
       .padding(0.1)
       .domain(this.state.data.map((d) => d[this.props.labelField]));
     this.yScale = getScale(this.props.yScale)
-      .range([this.innerHeight, 0])
+      .range([this.state.innerHeight, 0])
       .domain([1, d3.max(this.state.data, (d) => d[this.props.valueField])]);
     // don't really need a scale for color - just using one color for this chart
     this.colorScale = getScale('color');
@@ -56,22 +57,30 @@ class BarChart extends React.Component {
                   x = {this.xScale(d[this.props.labelField])}
                   width = {this.xScale.bandwidth()}
                   y = {this.yScale(d[this.props.valueField])}
-                  height = {this.innerHeight - this.yScale(d[this.props.valueField])}
+                  height = {this.state.innerHeight - this.yScale(d[this.props.valueField])}
                 />
               )
             )
           }
           <Axis
-            transform = {`translate(0, ${this.innerHeight})`}
+            transform = {`translate(0, ${this.state.innerHeight})`}
             width = '90'
             scale = {this.xScale}
             axis = {d3.axisBottom}
             wrapWidth = {this.xScale.bandwidth()}
+            width = {this.state.innerWidth}
+            height = {this.state.innerHeight}
+            labelText = {this.props.xAxisLabelText}
+            labelOffset = {this.props.xAxisLabelOffset}
           />
           <Axis
             scale = {this.yScale}
             axis = {d3.axisLeft}
             tickFormat = ",.0f"
+            width = {this.state.innerWidth}
+            height = {this.state.innerHeight}
+            labelText = {this.props.xAxisLabelText}
+            labelOffset = {this.props.xAxisLabelOffset}
           />
         </g>
       </svg>
