@@ -3,14 +3,19 @@
       yScale: 'linear',
       dataUrl: '/visualizations/asteroid_bar_chart.json',
       labelField: 'condition_code',
-      valueField: 'count' %>
+      valueField: 'count',
+      xAxisLabelText: 'Condition Code',
+      yAxisLabelText: 'Asteroid Count',
+      yAxisLabelOffset: 60 %>
 
 <h2>Asteroid Count By Condition Code - Logarithmic Scale</h2>
 <%= react_component 'BarChart',
       yScale: 'log',
       dataUrl: '/visualizations/asteroid_bar_chart.json',
       labelField: 'condition_code',
-      valueField: 'count' %>
+      valueField: 'count',
+      xAxisLabelText: 'Condition Code',
+      yAxisLabelText: 'Asteroid Count' %>
 
 <p>
   Thanks to user d3noob at bl.ocks.org for the starter code: <%= link_to "https://bl.ocks.org/d3noob/bdf28027e0ce70bd132edc64f1dd7ea4" %>

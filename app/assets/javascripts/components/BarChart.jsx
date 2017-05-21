@@ -63,8 +63,7 @@ class BarChart extends React.Component {
             )
           }
           <Axis
-            transform = {`translate(0, ${this.state.innerHeight})`}
-            width = '90'
+            axisType = 'x'
             scale = {this.xScale}
             axis = {d3.axisBottom}
             wrapWidth = {this.xScale.bandwidth()}
@@ -74,13 +73,14 @@ class BarChart extends React.Component {
             labelOffset = {this.props.xAxisLabelOffset}
           />
           <Axis
+            axisType = 'y'
             scale = {this.yScale}
             axis = {d3.axisLeft}
             tickFormat = ",.0f"
             width = {this.state.innerWidth}
             height = {this.state.innerHeight}
-            labelText = {this.props.xAxisLabelText}
-            labelOffset = {this.props.xAxisLabelOffset}
+            labelText = {this.props.yAxisLabelText}
+            labelOffset = {this.props.yAxisLabelOffset}
           />
         </g>
       </svg>
@@ -96,5 +96,9 @@ BarChart.defaultProps = {
   margin: {top: 20, right: 20, bottom: 60, left: 80},
   width: 960,
   height: 500,
-  yScale: 'linear'
+  yScale: 'linear',
+  xAxisLabelText: '',
+  xAxisLabelOffset: 40,
+  yAxisLabelText: '',
+  yAxisLabelOffset: 50
 }
