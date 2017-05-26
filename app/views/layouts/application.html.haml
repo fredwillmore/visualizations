@@ -16,7 +16,7 @@
       .col-sm-12
         %h1 Visualizations Gallery
     .row
-      .col-sm-3
+      .col-sm-2
         %p= link_to "Asteroid Bar Chart", asteroid_bar_chart_visualizations_path
         %p= link_to "Asteroid Pie Chart", asteroid_pie_chart_visualizations_path
         %p= link_to "Asteroid Scatter Plot", asteroid_scatter_plot_visualizations_path
@@ -30,6 +30,5 @@
         %p
           - (1940..2015).each do |year|
             = link_to year, billboard_multi_line_chart_visualizations_path(params.merge year: year)
-      .col-sm-8
+      .col-sm-10
         = yield
-      .col-sm-1

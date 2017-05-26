@@ -164,11 +164,10 @@ class VisualizationsController < ApplicationController
 
   def psu_data
     respond_to do |format|
-      format.html do
-        render :psu_data
-      end
+      format.html
       format.json do
-        parsed_file = CSV.read("#{Rails.root}/db/seeds/data/graduates/portland_state/#{visualizations_params[:year] || 2016}.tsv", { col_sep: "\t", headers: true })
+        year = (2006..2016).include?(visualizations_params[:year].to_i) ? visualizations_params[:year] : 2016
+        parsed_file = CSV.read("#{Rails.root}/db/seeds/data/graduates/portland_state/#{year}.tsv", { col_sep: "\t", headers: true })
         result = parsed_file.map(&:to_h)
         json = case visualizations_params[:type]
           when 'by_program_male'

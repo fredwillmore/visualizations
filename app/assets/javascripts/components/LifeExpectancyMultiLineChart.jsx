@@ -18,6 +18,8 @@ class LifeExpectancyMultiLineChart extends React.Component {
         xMax = {this.props.xMax}
         yMin = {this.props.yMin}
         yMax = {this.props.yMax}
+        width = {this.props.width}
+        height = {this.props.height}
         xTickFormat = {(d) => d.toString()}
         xAxisLabelText = {this.props.xAxisLabelText}
         yAxisLabelText = {this.props.yAxisLabelText}
@@ -86,7 +88,7 @@ LifeExpectancyMultiLineChart.defaultProps = {
   xMax: 2010,
   yMin: 20,
   yMax: 90,
-  width: 925,
+  width: 790,
   height: 550,
   colorIndex: 'WellBeing',
   colorIndexDescription: 'Well Being Index',

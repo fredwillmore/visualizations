@@ -34,4 +34,10 @@
         wht_m: "#{get_ethnicity :wht} Male"
       },
       groupBy: 'program',
-      dataUrl: "/visualizations/psu_data.json?year=#{params[:year]}" %>
+      dataUrl: "/visualizations/psu_data.json?year=#{params[:year]}",
+      xAxisLabelText: 'Program',
+      yAxisLabelText: 'Number of Graduates',
+      xAxisLabelOffset: 30,
+      yAxisLabelOffset: 30
+
+      %>

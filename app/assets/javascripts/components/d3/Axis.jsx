@@ -75,7 +75,8 @@ class Axis extends React.Component {
 Axis.defaultProps = {
   className: "axis",
   ticks: 10,
-  tickFormat: (t) => t.toString()
+  tickFormat: (t) => t.toString(),
+  labelOffset: 20
 }
 
 // TODO: the whole switch-on-type things happening to differentiate x and y axes is a code smell that indicates a need for dependency injection

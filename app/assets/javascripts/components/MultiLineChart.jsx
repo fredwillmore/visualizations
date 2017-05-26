@@ -192,7 +192,7 @@ class MultiLineChart extends React.Component {
           highlightedItemID: null
         })
       }} >
-        <h2>{this.state.headerText}</h2>
+        <h3>{this.state.headerText}</h3>
         <p>{this.state.subHeaderText}</p>
         { /* TODO: eventually this should be controlled by natural zooming actions (scrolling, selecting or gestures) */ }
         <button onClick={this.crudeZoomIn.bind(this)}>Zoom In</button>

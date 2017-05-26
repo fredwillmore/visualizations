@@ -15,14 +15,21 @@ class Bar extends React.Component {
 
   triggerTransitions(callback = () => {}) {
     var node = d3.select(ReactDOM.findDOMNode(this))
+
+    var a0 = this.props.transitionAttributes[0],
+      a1 = this.props.transitionAttributes[1]
+    node.transition()
+        .delay(a0.delay)
+        .duration(a0.duration)
+        .attr(isNaN(a0.x) ? null : 'x', a0.x)
+        .attr(isNaN(a0.width) ? null : 'width', a0.width)
+        .attr(isNaN(a0.y) ? null : 'y', a0.y)
+        .attr(isNaN(a0.height) ? null : 'height', a0.height)
       .transition()
-        .delay(this.props.transitionAttributes.delay)
-        .duration(this.props.transitionAttributes.duration)
-        .attr(this.props.transitionAttributes.xyAttr1, this.props.transitionAttributes.xyVal1)
-        .attr(this.props.transitionAttributes.hwAttr1, this.props.transitionAttributes.hwVal1)
-      .transition()
-        .attr(this.props.transitionAttributes.xyAttr2, this.props.transitionAttributes.xyVal2)
-        .attr(this.props.transitionAttributes.hwAttr2, this.props.transitionAttributes.hwVal2)
+        .attr(isNaN(a1.x) ? null : 'x', a1.x)
+        .attr(isNaN(a1.width) ? null : 'width', a1.width)
+        .attr(isNaN(a1.y) ? null : 'y', a1.y)
+        .attr(isNaN(a1.height) ? null : 'height', a1.height)
       .on('end', () => callback())
   }
 

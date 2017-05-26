@@ -13,8 +13,8 @@ class BillboardMultiLineChart extends React.Component {
         xMax = {new Date(Date.parse(this.props.endDate))}
         yMin = {this.props.yMin}
         yMax = {this.props.yMax}
-        width = {1200}
-        height = {600}
+        width = {this.props.width}
+        height = {this.props.height}
         xScale = {this.props.xScale}
         xTicks = {this.props.xTicks}
         xTickFormat = {this.props.xTickFormat}
@@ -58,6 +58,8 @@ BillboardMultiLineChart.defaultProps = {
   yMax: 1,
   xScale: 'date',
   xTicks: 12,
+  width: 1200,
+  height: 600,
   // xTickFormat: (d) => new Date(d).toLocaleDateString("en-US", { month: 'long', day: 'numeric' })
   yTicks: 100,
   yTickFormat: (d) => (d == 1 || 0 == d%10) ? d : '',

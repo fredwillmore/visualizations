@@ -21,7 +21,7 @@ class StackedGroupedBarChart extends React.Component {
   formatData(data) {
     data.forEach((d) => {
       this.valueFields.forEach((field) => {
-        d[field] = d[field]+d[field]
+        d[field] = +d[field]
         if(isNaN(d[field])){
           d[field]=0
         }
@@ -48,9 +48,9 @@ class StackedGroupedBarChart extends React.Component {
     // The y01z array has the same structure as yz, but with stacked [y₀, y₁] instead of y.
     var xz = d3.range(m);
     var yz = this.valueFields.map((field) => this.state.data.map((row, row_index) => row[field]))
-    this.state.y01z = d3.stack().keys(d3.range(n))(d3.transpose(yz))
-    this.state.yMax = d3.max(yz, (y) => d3.max(y))
-    this.state.y1Max = d3.max(this.state.y01z, (y) => d3.max(y, (d) => d[1]))
+    this.y01z = d3.stack().keys(d3.range(n))(d3.transpose(yz))
+    this.yMax = d3.max(yz, (y) => d3.max(y))
+    this.y1Max = d3.max(this.y01z, (y) => d3.max(y, (d) => d[1]))
 
     this.xScale = d3.scaleBand()
       .domain(xz)
@@ -58,7 +58,7 @@ class StackedGroupedBarChart extends React.Component {
       .padding(0.08)
 
     this.yScale = d3.scaleLinear()
-      .domain([0, this.state.y1Max])
+      .domain([0, this.y1Max])
       .range([this.innerHeight, 0])
 
     this.colorScale = d3.scaleOrdinal()
@@ -80,7 +80,7 @@ class StackedGroupedBarChart extends React.Component {
       <svg width = {this.props.width} height = {this.props.height}>
         <g transform = {`translate(${this.props.margin.left},${this.props.margin.top})`} >
           {
-            this.state.y01z.map((d, i) => (
+            this.y01z.map((d, i) => (
               <ReactTransitionGroup component="g" key={i} className="series">
                 {
                   d.map((v, j) => {
@@ -102,12 +102,26 @@ class StackedGroupedBarChart extends React.Component {
             ))
           }
           <Axis
-            transform = {`translate(0, ${this.innerHeight})`}
-            width = '90'
+            axisType = 'x'
+            width = {this.innerWidth}
+            height = {this.innerHeight}
             scale = {this.xScale}
             axis = {d3.axisBottom}
             wrapWidth = {this.xScale.bandwidth()}
             tickFormat = {(d) => this.metadataLookup[this.props.groupBy][d]}
+            labelText = {this.props.xAxisLabelText}
+            labelOffset = {this.props.xAxisLabelOffset}
+          />
+          <Axis
+            axisType = 'y'
+            width = {this.innerWidth}
+            height = {this.innerHeight}
+            scale = {this.yScale}
+            axis = {d3.axisLeft}
+            ticks = '10'
+            tickFormat = {(d) => d}
+            labelText = {this.props.yAxisLabelText}
+            labelOffset = {this.props.yAxisLabelOffset}
           />
         </g>
       </svg>
@@ -115,38 +129,32 @@ class StackedGroupedBarChart extends React.Component {
     )
   }
 
-  // TODO: the transition attributes coming from this function are ugly, brittle, and overly verbose
-  // figure out how to nice it up
+  // TODO: this still sucks
   getTransitionAttributes(v, j, i){
     switch (this.state.barDisplay) {
       case 'grouped':
-        return {
+        return [{
           duration: 500,
           delay: j * 10,
-          xyAttr1: 'x',
-          xyVal1: this.xScale(j) + this.xScale.bandwidth() / this.valueFields.length * i,
-          hwAttr1: 'width',
-          hwVal1: this.xScale.bandwidth() / this.valueFields.length,
-          xyAttr2: 'y',
-          xyVal2: this.yScale(v[1] - v[0]),
-          hwAttr2: 'height',
-          hwVal2: this.yScale(0) - this.yScale(v[1] - v[0])
-        }
+          x: this.xScale(j) + this.xScale.bandwidth() / this.valueFields.length * i,
+          width: this.xScale.bandwidth() / this.valueFields.length
+        }, {
+          y: this.yScale(v[1] - v[0]),
+          height: this.yScale(0) - this.yScale(v[1] - v[0])
+        }]
         break;
       case 'stacked':
       default:
-        return {
+        console.log(this.yScale)
+        return [{
           duration: 500,
           delay: j * 10,
-          xyAttr1: 'y',
-          xyVal1: this.yScale(v[1]),
-          hwAttr1: 'height',
-          hwVal1: this.yScale(v[0]) - this.yScale(v[1]),
-          xyAttr2: 'x',
-          xyVal2: this.xScale(j),
-          hwAttr2: 'width',
-          hwVal2: this.xScale.bandwidth()
-        }
+          y: this.yScale(v[1]),
+          height: this.yScale(v[0]) - this.yScale(v[1])
+        }, {
+          x: this.xScale(j),
+          width: this.xScale.bandwidth()
+        }]
     }
   }
 
@@ -161,5 +169,5 @@ class StackedGroupedBarChart extends React.Component {
 
 StackedGroupedBarChart.defaultProps = {
   valueFieldsLabels: {},
-  margin: {top: 40, right: 10, bottom: 40, left: 10}
+  margin: {top: 10, right: 10, bottom: 50, left: 50}
 }
