@@ -61,9 +61,7 @@ class StackedGroupedBarChart extends React.Component {
       .domain([0, this.y1Max])
       .range([this.innerHeight, 0])
 
-    this.colorScale = d3.scaleOrdinal()
-      .domain(d3.range(n))
-      .range(d3.schemeCategory20c)
+    this.colorScale = this.props.colorScale
   }
 
   render(){
@@ -124,6 +122,7 @@ class StackedGroupedBarChart extends React.Component {
             labelOffset = {this.props.yAxisLabelOffset}
           />
         </g>
+        { this.props.children }
       </svg>
     </div>
     )
@@ -145,7 +144,6 @@ class StackedGroupedBarChart extends React.Component {
         break;
       case 'stacked':
       default:
-        console.log(this.yScale)
         return [{
           duration: 500,
           delay: j * 10,
