@@ -34,7 +34,8 @@ class StackedGroupedBarChart extends React.Component {
   createMetadataLookup() {
     this.metadataLookup = {
       [this.props.groupBy]: this.state.data.map((d) => d[this.props.groupBy]),
-      label: Object.keys(this.props.valueFieldsLabels).map((v, k) => this.props.valueFieldsLabels[v])
+      label: Object.keys(this.props.valueFieldsLabels).map((v, k) => this.props.valueFieldsLabels[v]),
+      colorKey: Object.keys(this.props.valueFieldsLabels)
     };
   }
 
@@ -47,10 +48,18 @@ class StackedGroupedBarChart extends React.Component {
     // Each yz[i] is an array of m non-negative numbers representing a y-value for xz[i].
     // The y01z array has the same structure as yz, but with stacked [y₀, y₁] instead of y.
     var xz = d3.range(m);
-    var yz = this.valueFields.map((field) => this.state.data.map((row, row_index) => row[field]))
-    this.y01z = d3.stack().keys(d3.range(n))(d3.transpose(yz))
-    this.yMax = d3.max(yz, (y) => d3.max(y))
-    this.y1Max = d3.max(this.y01z, (y) => d3.max(y, (d) => d[1]))
+    var yz = this.valueFields.map((field) => {
+      return this.state.data.map((row, row_index) => {
+        return { value: row[field], key: field }
+      })
+    })
+    this.y01z = d3.stack().keys(d3.range(n)).value(( d, key) => d[key].value )(d3.transpose(yz))
+    // this.yMax = d3.max(yz, (y) => {
+    //   return d3.max(y.map((item) => item.value))
+    // })
+    this.y1Max = d3.max(this.y01z, (y) => d3.max(y, (d) => {
+      return d[1]
+    }))
 
     this.xScale = d3.scaleBand()
       .domain(xz)
@@ -90,8 +99,8 @@ class StackedGroupedBarChart extends React.Component {
                       y = {this.innerHeight}
                       width = {this.xScale.bandwidth()}
                       height = '0'
-                      label = {this.metadataLookup.label[j]}
-                      fill = {this.colorScale(i)}
+                      label = {this.metadataLookup.label[i]}
+                      fill = {this.colorScale(this.metadataLookup.colorKey[i])}
                       transitionAttributes = {this.getTransitionAttributes(v, j, i)}
                     />
                   )})

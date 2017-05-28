@@ -6,7 +6,7 @@ class PsuDataLegend extends React.Component {
   render () {
     var boxWidth = 16
     var labels = {
-      nra: 'Nonresident aliens',
+      // nra: 'Nonresident aliens',
       asi: 'Asian American',
       blk: 'Black',
       his: 'Hispanic',
@@ -14,7 +14,7 @@ class PsuDataLegend extends React.Component {
       pac: 'Pacific Islander',
       unk: 'Unknown',
       wht: 'White',
-      tot: 'Program Totals',
+      // tot: 'Program Totals',
       two: 'Two or More'
     }
     var marginLeft = boxWidth/2
@@ -38,7 +38,7 @@ class PsuDataLegend extends React.Component {
               fFill = this.props.colorScale(`${key}_f`)
             var y = boxWidth + (i)*ySpace
             return (
-              <g>
+              <g key={key}>
                 <rect
                   x={marginLeft}
                   y={y}
