@@ -10,7 +10,8 @@ class MultiLineChart extends React.Component {
       xMin: this.props.xMin,
       xMax: this.props.xMax,
       yMin: this.props.yMin,
-      yMax: this.props.yMax
+      yMax: this.props.yMax,
+      dataUrl: this.props.dataUrl
     }
 
     this.getHeaderText = this.props.getHeaderText.bind(this)
@@ -21,13 +22,21 @@ class MultiLineChart extends React.Component {
   componentWillReceiveProps(nextProps) {
     this.setState({
       xMin: nextProps.xMin,
-      yMin: nextProps.yMin
+      xMax: nextProps.xMax,
+      yMin: nextProps.yMin,
+      dataUrl: nextProps.dataUrl,
+      headerText: nextProps.headerText
     })
+    this.loadData(nextProps.dataUrl)
   }
 
   componentDidMount() {
+    this.loadData(this.state.dataUrl)
+  }
+
+  loadData(dataUrl) {
     $.ajax({
-      url: this.props.dataUrl,
+      url: dataUrl,
       dataType: 'json',
       success: function(data) {
         this.setState({data: this.formatData(data)})

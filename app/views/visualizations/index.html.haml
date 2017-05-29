@@ -1,0 +1,16 @@
+%style
+  image, img {width: 300px; margin: 10px;}
+
+.container
+  .row
+    .col-sm-4
+      = link_to image_tag('/asteroid_scatter_plot_example.png'), asteroid_scatter_plot_visualizations_path
+    .col-md-4
+      = link_to image_tag('/bar_chart_example.png', width: 300), asteroid_bar_chart_visualizations_path
+    .col-sm-4
+      = link_to image_tag('/billboard_data_example.png'), billboard_multi_line_chart_visualizations_path(params.except(:action, :controller).merge chart_length: 40)
+  .row
+    .col-sm-4
+      = link_to image_tag('/life_expectancy_example.png'), life_expectancy_multi_line_chart_visualizations_path
+    .col-sm-4
+      = link_to image_tag('/psu_data_example.png'), psu_data_visualizations_path

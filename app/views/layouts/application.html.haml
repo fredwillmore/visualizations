@@ -22,13 +22,6 @@
         %p= link_to "Asteroid Scatter Plot", asteroid_scatter_plot_visualizations_path
         %p= link_to "PSU Engineering Graduate Data - Stacked Grouped Bar Chart", psu_data_visualizations_path
         %p= link_to "World Life Expectancy - Multi Line Chart", life_expectancy_multi_line_chart_visualizations_path
-        %p Billboard Singles - Multi Line Chart
-        %p
-          = link_to "Top 10", billboard_multi_line_chart_visualizations_path(params.merge chart_length: 10)
-          = link_to "Top 40", billboard_multi_line_chart_visualizations_path(params.merge chart_length: 40)
-          = link_to "Top 100", billboard_multi_line_chart_visualizations_path(params.merge chart_length: 100)
-        %p
-          - (1940..2015).each do |year|
-            = link_to year, billboard_multi_line_chart_visualizations_path(params.merge year: year)
+        %p= link_to "Billboard Singles - Multi Line Chart", billboard_multi_line_chart_visualizations_path
       .col-sm-10
         = yield
