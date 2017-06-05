@@ -1,0 +1,36 @@
+%h2 PSU Engineering Graduates by Ethnicity and Gender
+
+%div
+  - (2007..2016).each do |year|
+    - if params[:year] == year.to_s
+      = content_tag 'b', year
+    - else
+      = link_to year, psu_data_visualizations_path(year: year)
+%br
+= react_component 'PsuStackedGroupedBarChart',
+    width: 960,
+    height: 500,
+    valueFieldsLabels: { asi_f: "#{get_ethnicity :asi} Female",
+      asi_m: "#{get_ethnicity :asi} Male",
+      blk_f: "#{get_ethnicity :blk} Female",
+      blk_m: "#{get_ethnicity :blk} Male",
+      his_f: "#{get_ethnicity :his} Female",
+      his_m: "#{get_ethnicity :his} Male",
+      ind_f: "#{get_ethnicity :ind} Female",
+      ind_m: "#{get_ethnicity :ind} Male",
+      pac_f: "#{get_ethnicity :pac} Female",
+      pac_m: "#{get_ethnicity :pac} Male",
+      tot_f: "#{get_ethnicity :tot} Female",
+      tot_m: "#{get_ethnicity :tot} Male",
+      two_f: "#{get_ethnicity :two} Female",
+      two_m: "#{get_ethnicity :two} Male",
+      unk_f: "#{get_ethnicity :unk} Female",
+      unk_m: "#{get_ethnicity :unk} Male",
+      wht_f: "#{get_ethnicity :wht} Female",
+      wht_m: "#{get_ethnicity :wht} Male" },
+    groupBy: 'program',
+    dataUrl: "/visualizations/psu_data.json?year=#{params[:year]}",
+    xAxisLabelText: 'Program',
+    yAxisLabelText: 'Number of Graduates',
+    xAxisLabelOffset: 30,
+    yAxisLabelOffset: 30
