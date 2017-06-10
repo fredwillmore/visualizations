@@ -216,6 +216,18 @@ class VisualizationsController < ApplicationController
     end
   end
 
+  def priority_queue
+    respond_to do |format|
+      format.html
+      format.json do
+        render json: [
+          { cx: 200, cy: 150, vx: 0.20, vy: -0.030, radius: 10 },
+            # { cx: 150, cy: 250, vx: -0.10, vy: -0.020, radius: 16 }
+        ]
+      end
+    end
+  end
+
   private
 
   def visualizations_params
