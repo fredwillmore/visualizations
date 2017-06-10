@@ -47,38 +47,37 @@ class ScatterPlot extends React.Component {
     return (
       <svg width = {this.props.outerWidth} height = {this.props.outerHeight}>
         <g transform = {`translate(${this.margin.left},${this.margin.top})`} >
-          <defs>
-            {
-              this.state.data.map((d, i) => (
-                <radialGradient
-                  key = {i}
-                  cx = "30%"
-                  cy = "40%"
-                  spreadMethod = "pad"
-                  id = {`grad${i}`}
-                >
-                  <stop
-                    offset = "0%"
-                    style = { {stopColor: d3.rgb(this.colorScale(d[this.props.colorColumn])).brighter(.7)} }
-                  />
-                  <stop
-                    offset = "100%"
-                    style = { {stopColor: d3.rgb(this.colorScale(d[this.props.colorColumn]))} }
-                  />
-                </radialGradient>
-              ))
-            }
-          </defs>
           <g>
             {
               this.state.data.map((d, i) => (
-                <circle
-                  key = {i}
-                  cx = {this.xScale(d[this.props.xColumn])}
-                  cy = {this.yScale(d[this.props.yColumn])}
-                  r = {this.rScale(d[this.props.rColumn])}
-                  fill = {`url(#grad${i})`}
-                />
+                <g>
+                  <defs>
+                    <radialGradient
+                      key = {i}
+                      cx = "30%"
+                      cy = "40%"
+                      spreadMethod = "pad"
+                      id = {`grad${i}`}
+                    >
+                      <stop
+                        offset = "0%"
+                        style = { {stopColor: d3.rgb(this.colorScale(d[this.props.colorColumn])).brighter(.7)} }
+                      />
+                      <stop
+                        offset = "100%"
+                        style = { {stopColor: d3.rgb(this.colorScale(d[this.props.colorColumn]))} }
+                      />
+                    </radialGradient>
+                  </defs>
+
+                  <circle
+                    key = {i}
+                    cx = {this.xScale(d[this.props.xColumn])}
+                    cy = {this.yScale(d[this.props.yColumn])}
+                    r = {this.rScale(d[this.props.rColumn])}
+                    fill = {`url(#grad${i})`}
+                  />
+                </g>
               ))
             }
           </g>
