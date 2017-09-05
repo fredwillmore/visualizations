@@ -22,3 +22,6 @@
 
 /db/seed/business_entities.rb
 /db/seed/data/business_entities.json
+
+.DS_Store
+
