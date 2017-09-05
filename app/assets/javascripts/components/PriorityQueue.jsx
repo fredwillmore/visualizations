@@ -8,8 +8,9 @@ class PriorityQueue extends React.Component {
     this.margin = props.margin
     this.innerWidth  = props.width  - this.margin.left - this.margin.right
     this.innerHeight = props.height - this.margin.top  - this.margin.bottom
-    this.eventQueue = []
-    this.transitionAttributes = []
+    this.eventQueue = new EventQueue
+    this.transitionAttributes = new Map
+    this.eventProcessor = this.eventProcessor.bind(this)
   }
 
   componentWillMount() {
@@ -21,183 +22,188 @@ class PriorityQueue extends React.Component {
       url: this.props.dataUrl,
       dataType: 'json',
       success: function(data) {
-        formattedData = this.formatData(data)
-        this.setState({
-          data: formattedData,
-        })
-        this.buildEventQueue(formattedData)
-        this.currentEvent = this.getNextEvent()
-        this.processCurrentEvent()
+        var formattedData = this.formatData(data)
+        this.eventQueue.load(this.buildEvents(formattedData))
+        this.setState({ data: formattedData })
+        this.eventQueue.nextEvent = this.eventQueue.dequeue()
+        this.eventQueue.processNextEvent(this.eventProcessor)
       }.bind(this)
     });
   }
 
   componentWillUpdate() {
     this.createScales()
-    if(this.currentEvent) {
-      this.processCurrentEvent()
+    if(this.nextEvent) {
+      this.eventQueue.processNextEvent(this.eventProcessor)
     }
-    // this.currentEvent = this.getNextEvent()
+    // this.nextEvent = this.getNextEvent()
   }
 
   componentDidUpdate() {
     // this.nextTransition()
-    // this.currentEvent = null
+    // this.nextEvent = null
   }
 
-  buildEvent(d, i){
-    var wall = (d.vx > 0) ? this.innerWidth : 0
-    var time = (wall - d.cx + d.radius * ( d.vx < 0 ? 1 : -1))/d.vx
-    var event = {
-      time: time,
-      changes: [{
-        objectIndex: i,
-        vx: -d.vx
-      }]
-    }
-
-    wall = (d.vy > 0) ? this.innerHeight : 0
-    time = (wall - d.cy + d.radius * ( d.vy < 0 ? 1 : -1))/d.vy
-    if(time < event.time){
-      event = {
-        time: time,
-        changes: [{ objectIndex: i, vy: -d.vy }]
-      }
-    }
-    return event
-  }
-
-  buildEventQueue(formattedData) {
-    this.eventQueue = []
-    formattedData.forEach((d, i) => {
-      var event = this.buildEvent(d, i)
-      this.eventQueue.push(event)
-    })
-    this.sortEventQueue()
-    return
-
-    // dummy test data
-    this.eventQueue = [
-      {
-        time: 300,
-        changes: [
-          { objectIndex: 0, vx: .1, vy: .2 }
-        ]
-      }, {
-        time: 500,
-        changes: [
-          { objectIndex: 0, vx: .2, vy: .1 }
-        ]
-      }, {
-        time: 200,
-        changes: [
-          { objectIndex: 0, vx: -.2, vy: -.1 }
-        ]
-      }, {
-        time: 600,
-        changes: [
-          { objectIndex: 0, vx: -.1, vy: -.2 }
-        ]
-      }
-    ]
-
-  }
-
-  sortEventQueue() {
-    this.eventQueue.sort((a,b) => a.time < b.time ? -1 : +(a.time > b.time))
-  }
-
-  getNextEvent(){
-    return this.eventQueue.shift()
-  }
 
   formatData(data) {
     // data.forEach((d) => {
     // })
-    return data;
+    return data.map((d, i) => Object.assign(d, {id: i+1}));
   }
 
   createScales() {
     this.colorScale = d3.scaleOrdinal(eval('d3.'+this.props.colorScheme))
   }
 
-  // nextTransition() {
-  //   if(this.currentEvent){
-  //     var updatedData = this.state.data
-  //     this.currentEvent.changes.forEach((c) => {
-  //       if(c.vx){
-  //         updatedData[c.objectIndex].vx = c.vx
-  //       }
-  //       if(c.vy){
-  //         updatedData[c.objectIndex].vy = c.vy
-  //       }
-  //
-  //       this.eventQueue = this.eventQueue.filter(
-  //         (event) => event.changes.filter(
-  //           (change) => change.objectIndex == c.objectIndex
-  //         )
-  //       )
-  //       var event = this.buildEvent(this.state.data[c.objectIndex], c.objectIndex)
-  //       this.eventQueue.push(event)
-  //       this.sortEventQueue()
-  //     })
-  //     this.setState({data: updatedData})
+  buildEvents(data) {
+    return data.map(this.buildEvent)
+  }
+
+  // buildEvent(d, i){
+  //   var wall = (d.vx > 0) ? this.innerWidth : 0
+  //   var time = (wall - d.cx + d.radius * ( d.vx < 0 ? 1 : -1))/d.vx
+  //   var event = {
+  //     time: time,
+  //     changes: [{
+  //       objectIndex: i,
+  //       vx: -d.vx
+  //     }]
   //   }
+  //
+  //   wall = (d.vy > 0) ? this.innerHeight : 0
+  //   time = (wall - d.cy + d.radius * ( d.vy < 0 ? 1 : -1))/d.vy
+  //   if(time < event.time){
+  //     event = {
+  //       time: time,
+  //       changes: [{ objectIndex: i, vy: -d.vy }]
+  //     }
+  //   }
+  //   return event
   // }
 
-  processCurrentEvent() {
-    if(this.currentEvent){
-      var updatedData = this.state.data
-      this.transitionAttributes = this.state.data.map((d, i) => {
-        var val = {
-          duration: this.currentEvent.time
-        }
-        var changed = false
-        // I think the changes array should only have one change for any given ball,
-        // so I could use .find instead of .filter,
-        // but leaving it open to be an array in case I ever need it to have more than one change
-        this.currentEvent.changes
-          .filter((c) => c.objectIndex == i)
-          .forEach((c) => {
-            if(c.vx){
-              val.vx = c.vx
-            }
-            if(c.vy){
-              val.vy = c.vy
-            }
-            changed = true
-          })
-        val.callback = () => {
-          if(!this.currentEvent){
-            this.currentEvent = this.getNextEvent()
-          }
-        }
-        val.cx = updatedData[i].cx + updatedData[i].vx * this.currentEvent.time
-        val.cy = updatedData[i].cy + updatedData[i].vy * this.currentEvent.time
+  buildEvent(d, direction){
+    var describer = (d, direction) => {
+      if(direction == 'x'){
+        return `Object ID ${d.id} collides with ${(d.vx > 0) ? 'right' : 'left'} wall`
+      } else {
+        return `Object ID ${d.id} collides with ${(d.vy > 0) ? 'bottom' : 'top'} wall`
+      }
+    },
+    timeToWall = (d, direction) => {
+      if(direction == 'x'){
+        wall = (d.vx > 0) ? this.innerWidth : 0
+        return  Math.abs((wall - d.cx + d.radius * ( d.vx < 0 ? 1 : -1))/d.vx)
+      } else {
+        wall = (d.vy > 0) ? this.innerHeight : 0
+        return Math.abs((wall - d.cy + d.radius * ( d.vy < 0 ? 1 : -1))/d.vy)
+      }
+    },
+    buildChanges = (d, direction) => {
+      if(direction == 'x'){
+        return [{ objectID: d.id, vx: -d.vx }]
+      } else {
+        return [{ objectID: d.id, vy: -d.vy }]
+      }
+    }
 
-        if(val.vx) { updatedData[i].vx = val.vx }
-        if(val.vy) { updatedData[i].vy = val.vy }
-        updatedData[i].cx = val.cx
-        updatedData[i].cy = val.cy
-        if(changed){
-          this.updateEventQueue(updatedData[i], i)
+    var direction = (timeToWall(d, 'y') < timeToWall(d, 'x')) ? 'y' : 'x'
+    var eventParams = {
+      duration: timeToWall(d, direction),
+      description: describer(d, direction),
+      changes: buildChanges(d, direction)
+    }
+    return new EventQueueEvent(eventParams)
+  }
+
+  updateData(event) {
+    var updatedData = this.state.data.map((d, i) => {
+
+    })
+    event.changes.forEach((c) => {
+      var newData
+      if(newData = this.state.data.filter((d) => d.id == c.objectID)[0]){
+        var changes = event.changes.filter((c) => c.objectID == d.id)
+        changes.forEach((c) => {
+          if(c.vx){ d.vx = c.vx }
+          if(c.vy){ d.vy = c.vy }
+        })
+        return d
+      }
+
+    })
+  }
+
+  updateTransitionAttributes(event) {
+    var newThing = new Map(this.state.data.map((d, i) => {
+      var val = {
+        duration: event.duration
+      }
+      var changed = false
+      // I think the changes array should only have one change for any given ball,
+      // so I could use .find instead of .filter,
+      // but leaving it open to be an array in case I ever need it to have more than one change
+      var changes = event.changes.filter((c) => c.objectID == d.id)
+      val.callback = () => {
+        if(!this.eventQueue.nextEvent){
+          this.eventQueue.nextEvent = this.eventQueue.dequeue()
+          // this is to trigger componentDidUpdate and render
+          // seems like cheating though
+          this.setState({something: true})
         }
-        return val
+      }
+
+      return [d.id, val]
+    }))
+    newThing.forEach((v, k) => this.transitionAttributes.set(k, v))
+  }
+
+  updateData(event) {
+    var updatedData = this.state.data
+    var newThing = new Map(this.state.data.map((d, i) => {
+      var changes = event.changes.filter((c) => c.objectID == d.id)
+      var val = {
+        duration: event.duration
+      }
+      changes.forEach((c) => {
+        if(c.vx){
+          updatedData[i].vx = c.vx
+        }
+        if(c.vy){
+          updatedData[i].vy = c.vy
+        }
       })
+      updatedData[i].cx = val.cx = updatedData[i].cx + updatedData[i].vx * this.eventQueue.nextEvent.duration
+      updatedData[i].cy = val.cy = updatedData[i].cy + updatedData[i].vy * this.eventQueue.nextEvent.duration
 
-      this.currentEvent = null
-      this.setState({data: updatedData})
+      if(changes.length){
+        this.updateEventQueue(updatedData[i], i)
+      }
+      return [d.id, val]
+    }))
+
+    return updatedData
+
+  }
+
+  eventProcessor(event) {
+    if(!this.state.paused){
+      this.updateTransitionAttributes(event)
+      var updatedData = this.updateData(event)
+      var newState = {
+        data: updatedData,
+        currentEvent: this.eventQueue.nextEvent
+      }
+      this.eventQueue.nextEvent = null
+      this.setState(newState)
     }
   }
 
   updateEventQueue(d, i){
-    this.eventQueue = this.eventQueue.filter((event) => {
-      return event.changes.filter((c) => c.objectIndex == i).length > 0
-    })
-    var event = this.buildEvent(d, i)
-    this.eventQueue.push(event)
-    this.sortEventQueue()
-    console.log(this.eventQueue)
+    this.eventQueue.filter(
+      (e) => e.changes.filter((c) => c.objectID == d.id).length > 0
+    )
+    this.eventQueue.enqueue(this.buildEvent(d, i))
+    this.eventQueue.sort()
   }
 
   render(){
@@ -216,17 +222,26 @@ class PriorityQueue extends React.Component {
               fill = 'white'
             />
             <ReactTransitionGroup component="g" className="view">
+              <EventQueueLegend
+                currentEvent = {this.state.currentEvent}
+                eventQueue = {this.eventQueue}
+                transitionAttributes = {{
+                  duration: this.transitionAttributes.get(1) ? this.transitionAttributes.get(1).duration : 0
+                }}
+              >
+              </EventQueueLegend>
               {
-                this.state.data.map((d, i) => {
-                  var a = this.transitionAttributes[i]
+                this.state.data.map((d) => {
+                  var a = this.transitionAttributes.get(d.id)
                   return (
                   <Ball
-                    key={i}
-                    fill={i ? 'lightgray' : 'darkgray'}
+                    key={d.id}
+                    fill={d.id==1 ? 'lightgray' : 'darkgray'}
                     cx = {(a || d).cx}
                     cy = {(a || d).cy}
                     r = {d.radius}
                     transitionAttributes = {a}
+                    paused = {this.state.paused}
                   />
                 )})
               }

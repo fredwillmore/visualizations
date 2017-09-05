@@ -221,8 +221,8 @@ class VisualizationsController < ApplicationController
       format.html
       format.json do
         render json: [
-          { cx: 200, cy: 150, vx: 0.20, vy: -0.030, radius: 10 },
-            # { cx: 150, cy: 250, vx: -0.10, vy: -0.020, radius: 16 }
+          { cx: 200, cy: 150, vx: 0.040, vy: -0.0060, radius: 10 },
+          # { cx: 150, cy: 250, vx: -0.020, vy: -0.0040, radius: 16 }
         ]
       end
     end
