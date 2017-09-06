@@ -6,7 +6,7 @@ class BillboardTrackTest < ActiveSupport::TestCase
     @track = FactoryGirl.create :billboard_track
   end
 
-  test "chart_trajectories returns an empty array if not entries found" do
+  test "chart_trajectories returns an empty array if no entries found" do
     assert_equal @track.chart_trajectories, []
   end
 
@@ -18,7 +18,7 @@ class BillboardTrackTest < ActiveSupport::TestCase
     assert_equal @track.chart_trajectories, [[{x: @chart_one.chart_date.to_s, y: @entry.position }]]
   end
 
-  test "chart_trajectories returns an array with two trajectories if the trajectories are not contiguous" do
+  test "chart_trajectories returns an array with two trajectories split on time between entries > 10 days" do
     @chart_one = FactoryGirl.create :billboard_chart, chart_date: '1977-05-25'
     @chart_two = FactoryGirl.create :billboard_chart, chart_date: '1977-06-01'
     @chart_three = FactoryGirl.create :billboard_chart, chart_date: '1977-06-22'
