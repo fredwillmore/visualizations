@@ -6,6 +6,12 @@ class BillboardTrackTest < ActiveSupport::TestCase
     @track = FactoryGirl.create :billboard_track
   end
 
+  # fix me
+  # test "association to Trajectory" do
+  #   @track = FactoryGirl.create :billboard_track
+  #   assert !@track.trajectories.nil? 
+  # end
+  
   test "chart_trajectories returns an empty array if no entries found" do
     assert_equal @track.chart_trajectories, []
   end
