@@ -1,23 +1,7 @@
 def split_by_attribute_diff array, split_size, attribute = :itself    
-  groups = []
-  current_group = []
-  previous = current = nil
-  array.sort_by(&attribute).each do |e|
-    previous = current
-    current = e
-    if previous && current.send(attribute) - previous.send(attribute) > split_size
-      if current_group.count > 0
-        groups << current_group
-        current_group = []
-      end
-    end
-    current_group << current
-  end
-  if current_group.count > 0
-    groups << current_group
-  end
-
-  groups
+  groups = array.sort_by(&attribute).slice_when do |a,b|
+    b.send(attribute) - a.send(attribute) >= split_size
+  end  
 end
 
 class Trajectory
@@ -33,4 +17,3 @@ class Trajectory
   end
   
 end
-
