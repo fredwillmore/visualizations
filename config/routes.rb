@@ -16,6 +16,9 @@ Rails.application.routes.draw do
       get 'billboard_multi_line_chart'
       get 'life_expectancy_multi_line_chart'
       get 'priority_queue'
+      get 'les_miserables'
+      get 'force_directed'
+      get 'graph'
     end
   end
   # The priority is based upon order of creation: first created -> highest priority.
