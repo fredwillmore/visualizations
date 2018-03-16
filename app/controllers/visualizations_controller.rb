@@ -216,6 +216,67 @@ class VisualizationsController < ApplicationController
     end
   end
 
+  def priority_queue
+    respond_to do |format|
+      format.html
+      format.json do
+        render json: [
+          { cx: 200, cy: 150, vx: 0.040, vy: -0.060, radius: 10 },
+          # { cx: 150, cy: 250, vx: -0.020, vy: -0.0040, radius: 16 }
+        ]
+      end
+    end
+  end
+  
+  def les_miserables
+    respond_to do |format|
+      format.html
+      format.json do
+        render json: File.read("db/seeds/data/les_miserables.json")
+      end
+    end
+  end
+  
+  Node = Struct.new(:id, :name, :group, :size, :x, :y) do
+
+    def to_ary
+      [id, value]
+    end
+    def serialize
+      debugger
+    end
+    # def size
+    #   10
+    # end
+  end
+  
+  def force_directed
+    respond_to do |format|
+      format.html
+      format.json do
+        thinger = JSON.parse File.read "db/seeds/data/force_directed.json"
+        new_thinger = { nodes: thinger['nodes'].each_with_index.map do |d, i| 
+            Node.new(
+              i,
+              d['id'],
+              d['group'],
+              10,       # TODO: make size a meaningful quantity
+              rand(960), # same with x
+              rand(500) # and y
+            )  
+          end,
+          links: thinger['links']
+        }
+        # debugger
+        render json: new_thinger
+      end
+    end
+  end
+
+  def graph
+    force_directed # same data as force_directed
+  end
+  
   private
 
   def visualizations_params
