@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       get 'priority_queue'
       get 'les_miserables'
       get 'force_directed'
+      get 'force_directed2'
       get 'graph'
     end
   end

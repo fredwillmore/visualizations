@@ -273,6 +273,15 @@ class VisualizationsController < ApplicationController
     end
   end
 
+  def force_directed2
+    respond_to do |format|
+      format.html
+      format.json do
+        render json: JSON.parse( File.read( "db/seeds/data/les_miserables.json"))
+      end
+    end
+  end
+
   def graph
     force_directed # same data as force_directed
   end
