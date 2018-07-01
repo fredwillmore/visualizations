@@ -18,7 +18,7 @@ class BillboardChartsControllerTest < ActionController::TestCase
 
   test "should create billboard_chart" do
     assert_difference('BillboardChart.count') do
-      post :create, billboard_chart: { date: @billboard_chart.date }
+      post :create, billboard_chart: { chart_date: @billboard_chart.chart_date }
     end
 
     assert_redirected_to billboard_chart_path(assigns(:billboard_chart))
@@ -35,7 +35,7 @@ class BillboardChartsControllerTest < ActionController::TestCase
   end
 
   test "should update billboard_chart" do
-    patch :update, id: @billboard_chart, billboard_chart: { date: @billboard_chart.date }
+    patch :update, id: @billboard_chart, billboard_chart: { chart_date: @billboard_chart.chart_date }
     assert_redirected_to billboard_chart_path(assigns(:billboard_chart))
   end
 

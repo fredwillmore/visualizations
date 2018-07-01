@@ -14,7 +14,7 @@
   <tbody>
     <% @billboard_tracks.each do |billboard_track| %>
       <tr>
-        <td><%= billboard_track.string %></td>
+        <td><%= billboard_track.name %></td>
         <td><%= billboard_track.billboard_artist %></td>
         <td><%= link_to 'Show', billboard_track %></td>
         <td><%= link_to 'Edit', edit_billboard_track_path(billboard_track) %></td>

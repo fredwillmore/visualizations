@@ -18,7 +18,11 @@ class BillboardChartEntriesControllerTest < ActionController::TestCase
 
   test "should create billboard_chart_entry" do
     assert_difference('BillboardChartEntry.count') do
-      post :create, billboard_chart_entry: { belongs_to: @billboard_chart_entry.belongs_to, belongs_to: @billboard_chart_entry.belongs_to, belongs_to: @billboard_chart_entry.belongs_to, date: @billboard_chart_entry.date, integer: @billboard_chart_entry.integer, integer: @billboard_chart_entry.integer, integer: @billboard_chart_entry.integer, integer: @billboard_chart_entry.integer, integer: @billboard_chart_entry.integer, integer: @billboard_chart_entry.integer, integer: @billboard_chart_entry.integer, peak_position: @billboard_chart_entry.peak_position }
+      post :create, billboard_chart_entry: { 
+        last_week_position: @billboard_chart_entry.last_week_position, 
+        position: @billboard_chart_entry.position, 
+        peak_position: @billboard_chart_entry.peak_position 
+      }
     end
 
     assert_redirected_to billboard_chart_entry_path(assigns(:billboard_chart_entry))
@@ -35,7 +39,11 @@ class BillboardChartEntriesControllerTest < ActionController::TestCase
   end
 
   test "should update billboard_chart_entry" do
-    patch :update, id: @billboard_chart_entry, billboard_chart_entry: { belongs_to: @billboard_chart_entry.belongs_to, belongs_to: @billboard_chart_entry.belongs_to, belongs_to: @billboard_chart_entry.belongs_to, date: @billboard_chart_entry.date, integer: @billboard_chart_entry.integer, integer: @billboard_chart_entry.integer, integer: @billboard_chart_entry.integer, integer: @billboard_chart_entry.integer, integer: @billboard_chart_entry.integer, integer: @billboard_chart_entry.integer, integer: @billboard_chart_entry.integer, peak_position: @billboard_chart_entry.peak_position }
+    patch :update, id: @billboard_chart_entry, billboard_chart_entry: { 
+      chart_entry_date: @billboard_chart_entry.chart_entry_date, 
+      position: @billboard_chart_entry.position, 
+      peak_position: @billboard_chart_entry.peak_position 
+    }
     assert_redirected_to billboard_chart_entry_path(assigns(:billboard_chart_entry))
   end
 

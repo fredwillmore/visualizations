@@ -13,7 +13,7 @@
   <tbody>
     <% @billboard_charts.each do |billboard_chart| %>
       <tr>
-        <td><%= billboard_chart.date %></td>
+        <td><%= billboard_chart.chart_date %></td>
         <td><%= link_to 'Show', billboard_chart %></td>
         <td><%= link_to 'Edit', edit_billboard_chart_path(billboard_chart) %></td>
         <td><%= link_to 'Destroy', billboard_chart, method: :delete, data: { confirm: 'Are you sure?' } %></td>

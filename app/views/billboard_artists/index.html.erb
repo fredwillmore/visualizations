@@ -13,7 +13,7 @@
   <tbody>
     <% @billboard_artists.each do |billboard_artist| %>
       <tr>
-        <td><%= billboard_artist.string %></td>
+        <td><%= billboard_artist.name %></td>
         <td><%= link_to 'Show', billboard_artist %></td>
         <td><%= link_to 'Edit', edit_billboard_artist_path(billboard_artist) %></td>
         <td><%= link_to 'Destroy', billboard_artist, method: :delete, data: { confirm: 'Are you sure?' } %></td>

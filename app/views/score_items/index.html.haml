@@ -1,0 +1,19 @@
+%h1 Listing score_items
+
+%table
+  %thead
+    %tr
+      %th
+      %th
+      %th
+
+  %tbody
+    - @score_items.each do |score_item|
+      %tr
+        %td= link_to 'Show', score_item
+        %td= link_to 'Edit', edit_score_item_path(score_item)
+        %td= link_to 'Destroy', score_item, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Score item', new_score_item_path

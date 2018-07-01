@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170426091549) do
+ActiveRecord::Schema.define(version: 20180417165321) do
 
   create_table "asteroids", force: :cascade do |t|
     t.string   "full_name"
@@ -131,6 +131,34 @@ ActiveRecord::Schema.define(version: 20170426091549) do
     t.decimal  "rot_per",        precision: 8,  scale: 8
     t.datetime "created_at",                               null: false
     t.datetime "updated_at",                               null: false
+  end
+
+  create_table "score_categories", force: :cascade do |t|
+    t.string   "name"
+    t.string   "color"
+    t.string   "description"
+    t.integer  "scores_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "score_items", force: :cascade do |t|
+    t.integer  "score_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "scores", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "score_category_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string   "username"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

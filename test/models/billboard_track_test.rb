@@ -15,7 +15,7 @@ class BillboardTrackTest < ActiveSupport::TestCase
   end
 
   test "chart_trajectory does things" do
-    assert_equal @billboard_track_one.chart_trajectory, [{x: @billboard_chart_one.chart_date.to_s, y: @billboard_chart_entry_one.position }]
+    assert_equal @billboard_track_one.chart_trajectories[0], [{x: @billboard_chart_one.chart_date.to_s, y: @billboard_chart_entry_one.position }]
   end
 
 end

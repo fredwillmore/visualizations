@@ -18,7 +18,7 @@ class BillboardTracksControllerTest < ActionController::TestCase
 
   test "should create billboard_track" do
     assert_difference('BillboardTrack.count') do
-      post :create, billboard_track: { artist_id: @billboard_track.artist_id, string: @billboard_track.string }
+      post :create, billboard_track: { billboard_artist_id: @billboard_track.billboard_artist_id, name: @billboard_track.name }
     end
 
     assert_redirected_to billboard_track_path(assigns(:billboard_track))
@@ -35,7 +35,7 @@ class BillboardTracksControllerTest < ActionController::TestCase
   end
 
   test "should update billboard_track" do
-    patch :update, id: @billboard_track, billboard_track: { artist_id: @billboard_track.artist_id, string: @billboard_track.string }
+    patch :update, id: @billboard_track, billboard_track: { billboard_artist_id: @billboard_track.billboard_artist_id, name: @billboard_track.name }
     assert_redirected_to billboard_track_path(assigns(:billboard_track))
   end
 

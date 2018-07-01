@@ -1,0 +1,10 @@
+= form_for @score_category do |f|
+  - if @score_category.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@score_category.errors.count, "error")} prohibited this score_category from being saved:"
+      %ul
+        - @score_category.errors.full_messages.each do |msg|
+          %li= msg
+
+  .actions
+    = f.submit 'Save'

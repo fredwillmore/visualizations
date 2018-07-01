@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  resources :score_categories
+  resources :users
+  resources :score_items
+  resources :scores
   resources :billboard_charts
   resources :billboard_chart_entries
   resources :billboard_tracks

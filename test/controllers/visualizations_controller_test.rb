@@ -7,7 +7,8 @@ class VisualizationsControllerTest < ActionController::TestCase
       condition_code: 5,
       q: 1.23,
       ad: 4.56,
-      gm: 1000
+      gm: 1000,
+      diameter: 1
   end
 
   test "should get asteroids by condition_code" do

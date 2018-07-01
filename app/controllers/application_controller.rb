@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
 
   def use_flat_file
-    Rails.env == 'production' || params[:use_flat_file] || !params[:use_database]
+    Rails.env == 'production' || params[:use_flat_file]
   end
 
   # Prevent CSRF attacks by raising an exception.
