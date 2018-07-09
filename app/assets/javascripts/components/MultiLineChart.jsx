@@ -211,7 +211,7 @@ class MultiLineChart extends React.Component {
         <button onClick={this.crudePanUp.bind(this)}>Pan Up</button>
         <button onClick={this.crudePanDown.bind(this)}>Pan Down</button>
         <br />
-        <svg width = {this.props.width} height = {this.props.height}>
+        <svg width = {this.props.width} height = {this.props.height} className = "multi-line-chart">
           <g
             transform = {`translate(${this.props.margin.left},${this.props.margin.top})`}
             width = {this.state.innerWidth}

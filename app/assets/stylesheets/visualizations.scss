@@ -37,18 +37,26 @@
 #vis{min-height:550px;}
 #blurb{height:60px;border-top:1px solid #e2e2e2;padding-top:20px;}
 
-path{
-  stroke-width:2;
-  fill:none;
+path {
+  stroke-width: 1;
 }
 
-path.highlight {
-  stroke:#ED7C31;
-  stroke-width:2;
-}
-path.current, path.clicked{
-  stroke:#000;
-  stroke-width:3;
+.multi-line-chart {
+
+  path.line {
+    stroke-width: 2;
+    fill: none;
+  }
+
+  path.highlight {
+    stroke:#ED7C31;
+    stroke-width:2;
+  }
+
+  path.current, path.clicked {
+    stroke:#000;
+    stroke-width:3;
+  }
 }
 
 .SAS.highlight{stroke:#895881;}
@@ -61,3 +69,4 @@ path.current, path.clicked{
 .highlight{stroke-width:1px;}
 .axis{stroke-width:0.8;stroke:#000;}
 .xTicks,.yTicks{stroke-width:0.6;stroke:#000;}
+
