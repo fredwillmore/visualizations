@@ -1,0 +1,30 @@
+%p#notice= notice
+%h1 Listing Billboard Chart Entries
+%table
+  %thead
+    %tr
+      %th Position
+      %th Last Week Position
+      %th Peak position
+      %th Weeks on Chart
+      %th Chart Entry Date
+      %th Entry Position
+      %th Overall Peak Position
+      %th Weeks On Chart
+      %th{:colspan => "3"}
+  %tbody
+    - @billboard_chart_entries.each do |billboard_chart_entry|
+      %tr
+        %td= billboard_chart_entry.position
+        %td= billboard_chart_entry.last_week_position
+        %td= billboard_chart_entry.peak_position
+        %td= billboard_chart_entry.weeks_on_chart
+        %td= billboard_chart_entry.chart_entry_date
+        %td= billboard_chart_entry.entry_position
+        %td= billboard_chart_entry.overall_peak_position
+        %td= billboard_chart_entry.overall_weeks_on_chart
+        %td= link_to 'Show', billboard_chart_entry
+        %td= link_to 'Edit', edit_billboard_chart_entry_path(billboard_chart_entry)
+        %td= link_to 'Destroy', billboard_chart_entry, method: :delete, data: { confirm: 'Are you sure?' }
+%br/
+= link_to 'New Billboard chart entry', new_billboard_chart_entry_path

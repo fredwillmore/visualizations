@@ -1,0 +1,7 @@
+%p#notice= notice
+%p
+  %strong Name:
+  = @billboard_artist.name
+= link_to 'Edit', edit_billboard_artist_path(@billboard_artist)
+|
+= link_to 'Back', billboard_artists_path

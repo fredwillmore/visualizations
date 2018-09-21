@@ -1,0 +1,14 @@
+%p#notice= notice
+%h1 Listing Asteroids
+%table
+  %thead
+    %tr
+      %th{:colspan => "3"}
+  %tbody
+    - @asteroids.each do |asteroid|
+      %tr
+        %td= link_to 'Show', asteroid
+        %td= link_to 'Edit', edit_asteroid_path(asteroid)
+        %td= link_to 'Destroy', asteroid, method: :delete, data: { confirm: 'Are you sure?' }
+%br/
+= link_to 'New Asteroid', new_asteroid_path

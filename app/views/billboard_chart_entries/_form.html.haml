@@ -1,0 +1,47 @@
+= form_for(@billboard_chart_entry) do |f|
+  - if @billboard_chart_entry.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@billboard_chart_entry.errors.count, "error")
+        prohibited this billboard_chart_entry from being saved:
+      %ul
+        - @billboard_chart_entry.errors.full_messages.each do |message|
+          %li= message
+  .field
+    = f.label :position
+    %br/
+    = f.text_field :position
+  .field
+    = f.label :last_week_position
+    %br/
+    = f.text_field :last_week_position
+  .field
+    = f.label :peak_position
+    %br/
+    = f.text_field :peak_position
+  .field
+    = f.label :weeks_on_chart
+    %br/
+    = f.text_field :weeks_on_chart
+  .field
+    = f.label :chart_entry_date
+    %br/
+    = f.text_field :chart_entry_date
+  .field
+    = f.label :entry_position
+    %br/
+    = f.text_field :entry_position
+  .field
+    = f.label :overall_peak_position
+    %br/
+    = f.text_field :overall_peak_position
+  .field
+    = f.label :overall_weeks_on_chart
+    %br/
+    = f.text_field :overall_weeks_on_chart
+  .field
+    = f.label :overall_weeks_on_chart
+    %br/
+    = f.text_field :overall_weeks_on_chart
+  .actions
+    = f.submit

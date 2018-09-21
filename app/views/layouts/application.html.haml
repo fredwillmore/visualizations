@@ -4,7 +4,8 @@
   %head
     %title Visualizations Gallery
     = stylesheet_link_tag 'application', media: 'all'
-    = javascript_include_tag 'application'
+    -# = javascript_include_tag 'application'
+    = javascript_pack_tag 'application'
     = csrf_meta_tags
     %meta{property: "og:image", content: image_tag('https://rocky-atoll-31651.herokuapp.com/life_expectancy_example.png')}
     %meta{property: "og:description", content: "Examples of visualizations created with d3.js, rendered in React.js, supported by a Ruby on Rails backend"}

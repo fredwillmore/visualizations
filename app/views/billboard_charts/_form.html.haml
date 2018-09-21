@@ -1,0 +1,15 @@
+= form_for(@billboard_chart) do |f|
+  - if @billboard_chart.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@billboard_chart.errors.count, "error")
+        prohibited this billboard_chart from being saved:
+      %ul
+        - @billboard_chart.errors.full_messages.each do |message|
+          %li= message
+  .field
+    = f.label :chart_date
+    %br/
+    = f.text_field :chart_date
+  .actions
+    = f.submit

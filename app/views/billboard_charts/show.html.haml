@@ -1,0 +1,7 @@
+%p#notice= notice
+%p
+  %strong Date:
+  = @billboard_chart.chart_date
+= link_to 'Edit', edit_billboard_chart_path(@billboard_chart)
+|
+= link_to 'Back', billboard_charts_path

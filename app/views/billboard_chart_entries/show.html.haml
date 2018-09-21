@@ -1,0 +1,19 @@
+%p#notice= notice
+%p
+  %strong Position:
+  = @billboard_chart_entry.position
+%p
+  %strong Last Week Position:
+  = @billboard_chart_entry.last_week_position
+%p
+  %strong Peak position:
+  = @billboard_chart_entry.peak_position
+%p
+  %strong Weeks on Chart:
+  = @billboard_chart_entry.weeks_on_chart
+%p
+  %strong Chart Entry Date:
+  = @billboard_chart_entry.chart_entry_date
+= link_to 'Edit', edit_billboard_chart_entry_path(@billboard_chart_entry)
+|
+= link_to 'Back', billboard_chart_entries_path

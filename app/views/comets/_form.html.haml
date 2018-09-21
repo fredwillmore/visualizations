@@ -1,0 +1,11 @@
+= form_for(@comet) do |f|
+  - if @comet.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@comet.errors.count, "error")
+        prohibited this comet from being saved:
+      %ul
+        - @comet.errors.full_messages.each do |message|
+          %li= message
+  .actions
+    = f.submit
