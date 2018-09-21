@@ -18,30 +18,30 @@ class BillboardArtistsControllerTest < ActionController::TestCase
 
   test "should create billboard_artist" do
     assert_difference('BillboardArtist.count') do
-      post :create, billboard_artist: { name: @billboard_artist.name }
+      post :create, params: {billboard_artist: { name: @billboard_artist.name }}
     end
 
     assert_redirected_to billboard_artist_path(assigns(:billboard_artist))
   end
 
   test "should show billboard_artist" do
-    get :show, id: @billboard_artist
+    get :show, params: {id: @billboard_artist}
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, id: @billboard_artist
+    get :edit, params: {id: @billboard_artist}
     assert_response :success
   end
 
   test "should update billboard_artist" do
-    patch :update, id: @billboard_artist, billboard_artist: { name: @billboard_artist.name }
+    patch :update, params: {id: @billboard_artist, billboard_artist: { name: @billboard_artist.name }}
     assert_redirected_to billboard_artist_path(assigns(:billboard_artist))
   end
 
   test "should destroy billboard_artist" do
     assert_difference('BillboardArtist.count', -1) do
-      delete :destroy, id: @billboard_artist
+      delete :destroy, params: {id: @billboard_artist}
     end
 
     assert_redirected_to billboard_artists_path

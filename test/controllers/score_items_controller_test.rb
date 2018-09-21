@@ -18,30 +18,30 @@ class ScoreItemsControllerTest < ActionController::TestCase
 
   test "should create score_item" do
     assert_difference('ScoreItem.count') do
-      post :create, score_item: {  }
+      post :create, params: {score_item: {  }}
     end
 
     assert_redirected_to score_item_path(assigns(:score_item))
   end
 
   test "should show score_item" do
-    get :show, id: @score_item
+    get :show, params: {id: @score_item}
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, id: @score_item
+    get :edit, params: {id: @score_item}
     assert_response :success
   end
 
   test "should update score_item" do
-    patch :update, id: @score_item, score_item: {  }
+    patch :update, params: {id: @score_item, score_item: {  }}
     assert_redirected_to score_item_path(assigns(:score_item))
   end
 
   test "should destroy score_item" do
     assert_difference('ScoreItem.count', -1) do
-      delete :destroy, id: @score_item
+      delete :destroy, params: {id: @score_item}
     end
 
     assert_redirected_to score_items_path

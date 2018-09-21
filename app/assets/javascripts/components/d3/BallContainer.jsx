@@ -1,4 +1,4 @@
-var ReactTransitionGroup = React.addons.TransitionGroup
+// var ReactTransitionGroup = React.addons.TransitionGroup
 
 class BallContainer extends React.Component {
   constructor (props) {

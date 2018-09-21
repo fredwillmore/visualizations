@@ -1,4 +1,4 @@
-class CreateScoreCategories < ActiveRecord::Migration
+class CreateScoreCategories < ActiveRecord::Migration[5.2]
   def change
     create_table :score_categories do |t|
       t.string :name

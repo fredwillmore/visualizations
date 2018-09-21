@@ -2,9 +2,9 @@ class ScatterPlot extends React.Component {
   constructor (props) {
     super(props)
     this.state = { data: [] }
-    this.margin = props.margin;
-    this.innerWidth  = this.props.outerWidth  - this.margin.left - this.margin.right;
-    this.innerHeight = this.props.outerHeight - this.margin.top  - this.margin.bottom;
+    this.margin = props.margin
+    this.innerWidth  = this.props.outerWidth  - this.margin.left - this.margin.right
+    this.innerHeight = this.props.outerHeight - this.margin.top  - this.margin.bottom
   }
 
   componentDidMount() {
@@ -19,26 +19,26 @@ class ScatterPlot extends React.Component {
 
   formatData(data) {
     data.forEach((d) => {
-      d[this.props.xColumn] = +d[this.props.xColumn];
-      d[this.props.yColumn] = +d[this.props.yColumn];
-      d[this.props.rColumn] = +d[this.props.rColumn];
+      d[this.props.xColumn] = +d[this.props.xColumn]
+      d[this.props.yColumn] = +d[this.props.yColumn]
+      d[this.props.rColumn] = +d[this.props.rColumn]
     });
     return data
   }
 
   createScales() {
-    this.xScale = getScale(this.props.xScale).range([0, this.innerWidth]);
-    this.yScale = getScale(this.props.yScale).range([this.innerHeight, 0]);
-    this.rScale = getScale(this.props.rScale).range([this.props.radiusMin, this.props.radiusMax]);
+    this.xScale = getScale(this.props.xScale).range([0, this.innerWidth])
+    this.yScale = getScale(this.props.yScale).range([this.innerHeight, 0])
+    this.rScale = getScale(this.props.rScale).range([this.props.radiusMin, this.props.radiusMax])
+    
+    this.colorScale = (i) => d3.rgb(this.props.colorScale[i])
+    
+    this.xScale.domain(d3.extent(this.state.data, (d) => d[this.props.xColumn]))
+    this.yScale.domain(d3.extent(this.state.data, (d) => d[this.props.yColumn]))
+    this.rScale.domain(d3.extent(this.state.data, (d) => d[this.props.rColumn]))
 
-    this.colorScale = d3.scaleOrdinal(eval('d3.'+this.props.colorScheme));
-
-    this.xScale.domain(d3.extent(this.state.data, (d) => d[this.props.xColumn]));
-    this.yScale.domain(d3.extent(this.state.data, (d) => d[this.props.yColumn]));
-    this.rScale.domain(d3.extent(this.state.data, (d) => d[this.props.rColumn]));
-
-    this.yScale.domain(d3.extent(this.state.data, (d) => d[this.props.yColumn]));
-    this.rScale.domain(d3.extent(this.state.data, (d) => d[this.props.rColumn]));
+    this.yScale.domain(d3.extent(this.state.data, (d) => d[this.props.yColumn]))
+    this.rScale.domain(d3.extent(this.state.data, (d) => d[this.props.rColumn]))
   }
 
   render(){
@@ -55,15 +55,19 @@ class ScatterPlot extends React.Component {
                   cx = "30%"
                   cy = "40%"
                   spreadMethod = "pad"
-                  id = {`grad${i}`}
+                  id = { "grad"+i }
                 >
                   <stop
                     offset = "0%"
-                    style = { {stopColor: d3.rgb(this.colorScale(d[this.props.colorColumn])).brighter(.7)} }
+                    style = { {
+                      stopColor: this.colorScale(d[this.props.colorColumn]).brighter(.7)
+                    } }
                   />
                   <stop
                     offset = "100%"
-                    style = { {stopColor: d3.rgb(this.colorScale(d[this.props.colorColumn]))} }
+                    style = { {
+                      stopColor: this.colorScale(d[this.props.colorColumn])
+                    } }
                   />
                 </radialGradient>
               ))
@@ -82,7 +86,6 @@ class ScatterPlot extends React.Component {
               ))
             }
           </g>
-
           <Axis
             axisType = 'x'
             className = "x axis"
@@ -95,7 +98,6 @@ class ScatterPlot extends React.Component {
             height = {this.innerHeight}
           >
           </Axis>
-
           <Axis
             axisType = 'y'
             className = "y axis"
@@ -109,10 +111,8 @@ class ScatterPlot extends React.Component {
           />
         </g>
       </svg>
-
     )
   }
-
 }
 
 ScatterPlot.defaultProps = {
@@ -130,8 +130,7 @@ ScatterPlot.defaultProps = {
   yAxisLabelOffset: 40,
   margin: { left: 60, top: 5, right: 5, bottom: 60 },
   colorColumn: "condition_code",
-  colorScheme: 'schemeCategory10',
   xScale: 'log',
   yScale: 'log',
-  rScale: 'linear',
+  rScale: 'linear'
 }

@@ -18,30 +18,30 @@ class CometsControllerTest < ActionController::TestCase
 
   test "should create comet" do
     assert_difference('Comet.count') do
-      post :create, comet: {  }
+      post :create, params: {comet: {  }}
     end
 
     assert_redirected_to comet_path(assigns(:comet))
   end
 
   test "should show comet" do
-    get :show, id: @comet
+    get :show, params: {id: @comet}
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, id: @comet
+    get :edit, params: {id: @comet}
     assert_response :success
   end
 
   test "should update comet" do
-    patch :update, id: @comet, comet: {  }
+    patch :update, params: {id: @comet, comet: {  }}
     assert_redirected_to comet_path(assigns(:comet))
   end
 
   test "should destroy comet" do
     assert_difference('Comet.count', -1) do
-      delete :destroy, id: @comet
+      delete :destroy, params: {id: @comet}
     end
 
     assert_redirected_to comets_path

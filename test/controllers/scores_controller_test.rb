@@ -18,30 +18,30 @@ class ScoresControllerTest < ActionController::TestCase
 
   test "should create score" do
     assert_difference('Score.count') do
-      post :create, score: {  }
+      post :create, params: {score: {  }}
     end
 
     assert_redirected_to score_path(assigns(:score))
   end
 
   test "should show score" do
-    get :show, id: @score
+    get :show, params: {id: @score}
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, id: @score
+    get :edit, params: {id: @score}
     assert_response :success
   end
 
   test "should update score" do
-    patch :update, id: @score, score: {  }
+    patch :update, params: {id: @score, score: {  }}
     assert_redirected_to score_path(assigns(:score))
   end
 
   test "should destroy score" do
     assert_difference('Score.count', -1) do
-      delete :destroy, id: @score
+      delete :destroy, params: {id: @score}
     end
 
     assert_redirected_to scores_path

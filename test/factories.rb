@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :asteroid
 
   factory :billboard_track

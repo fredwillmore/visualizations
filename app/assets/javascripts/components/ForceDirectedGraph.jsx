@@ -68,7 +68,7 @@ class Node extends React.Component {
   }
 }
   
-class ForceDirctedGraph extends React.Component {
+class ForceDirectedGraph extends React.Component {
   constructor (props) {
     super(props)
     this.state = { nodes: [], links: [] }
@@ -176,7 +176,7 @@ class ForceDirctedGraph extends React.Component {
 
 }
 
-ForceDirctedGraph.defaultProps = {
+ForceDirectedGraph.defaultProps = {
   selector: 'body',
   outerWidth: 900,
   outerHeight: 500,

@@ -18,30 +18,30 @@ class BillboardChartsControllerTest < ActionController::TestCase
 
   test "should create billboard_chart" do
     assert_difference('BillboardChart.count') do
-      post :create, billboard_chart: { chart_date: @billboard_chart.chart_date }
+      post :create, params: {billboard_chart: { chart_date: @billboard_chart.chart_date }}
     end
 
     assert_redirected_to billboard_chart_path(assigns(:billboard_chart))
   end
 
   test "should show billboard_chart" do
-    get :show, id: @billboard_chart
+    get :show, params: {id: @billboard_chart.id}
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, id: @billboard_chart
+    get :edit, params: {id: @billboard_chart.id}
     assert_response :success
   end
 
   test "should update billboard_chart" do
-    patch :update, id: @billboard_chart, billboard_chart: { chart_date: @billboard_chart.chart_date }
+    patch :update, params: {id: @billboard_chart.id, billboard_chart: { chart_date: @billboard_chart.chart_date }}
     assert_redirected_to billboard_chart_path(assigns(:billboard_chart))
   end
 
   test "should destroy billboard_chart" do
     assert_difference('BillboardChart.count', -1) do
-      delete :destroy, id: @billboard_chart
+      delete :destroy, params: {id: @billboard_chart.id}
     end
 
     assert_redirected_to billboard_charts_path

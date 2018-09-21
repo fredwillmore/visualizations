@@ -41,7 +41,7 @@ class VisualizationsController < ApplicationController
         render :asteroid_scatter_plot
       end
       format.json do
-        if use_flat_file
+        if use_flat_file 
           render json: File.read("db/seeds/data/asteroids/perihelion_aphelion_diameter.json")
         else
           render json: Asteroid.perihelion_aphelion_diameter

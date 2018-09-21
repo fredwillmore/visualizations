@@ -1,4 +1,4 @@
-class CreateBillboardChartEntries < ActiveRecord::Migration
+class CreateBillboardChartEntries < ActiveRecord::Migration[5.2]
   def change
     create_table :billboard_chart_entries do |t|
       t.integer :position

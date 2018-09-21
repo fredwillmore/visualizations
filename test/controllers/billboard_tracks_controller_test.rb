@@ -18,30 +18,41 @@ class BillboardTracksControllerTest < ActionController::TestCase
 
   test "should create billboard_track" do
     assert_difference('BillboardTrack.count') do
-      post :create, billboard_track: { billboard_artist_id: @billboard_track.billboard_artist_id, name: @billboard_track.name }
+      post :create, params: {
+        billboard_track: { 
+          billboard_artist_id: @billboard_track.billboard_artist_id, 
+          name: @billboard_track.name 
+        }
+      }
     end
 
     assert_redirected_to billboard_track_path(assigns(:billboard_track))
   end
 
   test "should show billboard_track" do
-    get :show, id: @billboard_track
+    get :show, params: {id: @billboard_track}
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, id: @billboard_track
+    get :edit, params: {id: @billboard_track}
     assert_response :success
   end
 
   test "should update billboard_track" do
-    patch :update, id: @billboard_track, billboard_track: { billboard_artist_id: @billboard_track.billboard_artist_id, name: @billboard_track.name }
+    patch :update, params: {
+      id: @billboard_track,
+      billboard_track: { 
+        billboard_artist_id: @billboard_track.billboard_artist_id, 
+        name: @billboard_track.name 
+      }
+    }
     assert_redirected_to billboard_track_path(assigns(:billboard_track))
   end
 
   test "should destroy billboard_track" do
     assert_difference('BillboardTrack.count', -1) do
-      delete :destroy, id: @billboard_track
+      delete :destroy, params: {id: @billboard_track}
     end
 
     assert_redirected_to billboard_tracks_path

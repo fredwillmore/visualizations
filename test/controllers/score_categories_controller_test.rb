@@ -18,30 +18,30 @@ class ScoreCategoriesControllerTest < ActionController::TestCase
 
   test "should create score_category" do
     assert_difference('ScoreCategory.count') do
-      post :create, score_category: {  }
+      post :create, params: {score_category: {  }}
     end
 
     assert_redirected_to score_category_path(assigns(:score_category))
   end
 
   test "should show score_category" do
-    get :show, id: @score_category
+    get :show, params: {id: @score_category}
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, id: @score_category
+    get :edit, params: {id: @score_category}
     assert_response :success
   end
 
   test "should update score_category" do
-    patch :update, id: @score_category, score_category: {  }
+    patch :update, params: {id: @score_category, score_category: {  }}
     assert_redirected_to score_category_path(assigns(:score_category))
   end
 
   test "should destroy score_category" do
     assert_difference('ScoreCategory.count', -1) do
-      delete :destroy, id: @score_category
+      delete :destroy, params: {id: @score_category}
     end
 
     assert_redirected_to score_categories_path

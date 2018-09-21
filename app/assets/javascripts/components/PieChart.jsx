@@ -1,12 +1,18 @@
 class PieChart extends React.Component {
   constructor (props) {
     super(props)
+
     this.state = { data: [] }
     this.radius = Math.min(props.width, props.height) / 2
     this.pathOuterRadius = this.radius - 10
     this.pathInnerRadius = 0
     this.labelOuterRadius = this.radius - 40
     this.labelInnerRadius = this.radius - 40
+
+    this.path = (d) => d3.arc().outerRadius(this.pathOuterRadius).innerRadius(this.pathInnerRadius)(d)
+    this.label = (d) => d3.arc().outerRadius(this.labelOuterRadius).innerRadius(this.labelInnerRadius).centroid(d)
+    this.labelText = (d) => d.data[this.props.labelField]
+    this.fill = (d) => this.colorScale(d.data[this.props.labelField])
   }
 
   componentDidMount() {
@@ -21,10 +27,12 @@ class PieChart extends React.Component {
 
   formatData(data) {
     data.forEach((d) => {
-      d[this.props.valueField] = +d[this.props.valueField];
-      if(isNaN(d[this.props.valueField])){
-        d[this.props.valueField] = 0;
+      var value = d[this.props.valueField]
+      value = +value;
+      if(isNaN(value)){
+        value = 0;
       }
+      d[this.props.valueField] = value
     })
     return d3.pie()
       .sort(null)
@@ -35,32 +43,27 @@ class PieChart extends React.Component {
   createScales() {
     this.colorScale = d3.scaleOrdinal(eval('d3.'+this.props.colorScheme))
   }
-
+  
   render(){
     this.createScales()
-
-    var path = d3.arc().outerRadius(this.pathOuterRadius).innerRadius(this.pathInnerRadius);
-    var label = d3.arc().outerRadius(this.labelOuterRadius).innerRadius(this.labelInnerRadius);
-
     return (
       <svg width = {this.props.width} height = {this.props.height}>
         <g transform = {`translate(${this.props.width / 2},${this.props.height / 2})`} >
           {
             this.state.data.map((d, i) => (
-              <g className="arc" key={i}>
-                <path
-                  d = {path(d)}
-                  fill = {this.colorScale(d.data[this.props.labelField])}
-                  stroke = "#fff"
-                >
-                </path>
+              <PieSlice 
+                key = {i}
+                d = {this.path(d)}
+                fill = {this.fill(d)}
+                stroke = "#fff"
+              >
                 <text
-                  transform = {`translate(${label.centroid(d)})`}
+                  transform = {`translate(${this.label(d)})`}
                   dy = "0.35em"
                 >
-                  {d.data[this.props.labelField]}
+                  {this.labelText(d)}
                 </text>
-              </g>
+              </PieSlice>
             ))
           }
         </g>

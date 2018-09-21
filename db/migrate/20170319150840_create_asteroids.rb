@@ -1,4 +1,4 @@
-class CreateAsteroids < ActiveRecord::Migration
+class CreateAsteroids < ActiveRecord::Migration[5.2]
   def change
     create_table :asteroids do |t|
       t.string :full_name

@@ -1,4 +1,4 @@
-var ReactTransitionGroup = React.addons.TransitionGroup
+// var ReactTransitionGroup = React.addons.TransitionGroup
 
 class Bar extends React.Component {
   constructor (props) {

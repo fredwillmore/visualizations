@@ -3,7 +3,7 @@ require 'test_helper'
 class VisualizationsControllerTest < ActionController::TestCase
 
   setup do
-    FactoryGirl.create :asteroid,
+    FactoryBot.create :asteroid,
       condition_code: 5,
       q: 1.23,
       ad: 4.56,

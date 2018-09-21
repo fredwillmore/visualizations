@@ -2,13 +2,13 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.7'
+gem 'rails', '5.2'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 4.1.0'
+gem 'coffee-rails'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
@@ -32,34 +32,36 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'kaminari'
 gem 'd3-rails'
-gem 'active_model_serializers'
+# gem 'active_model_serializers'
 gem 'sprockets-es6'
 gem 'babel-transpiler'
 gem 'react-rails'
 gem 'haml-rails'
 gem 'bootstrap'
+gem 'pg'
 
 group :development, :test do
   # Use sqlite3 as the database for Active Record
-  gem 'sqlite3'
+  # gem 'sqlite3'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   # gem 'jasmine'
+  gem 'rails-controller-testing'
 end
 
 group :test do
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
 end
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
-  gem 'web-console', '~> 2.0'
-
+  gem 'web-console'
+  
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 end
 
 group :production do
-  gem 'pg'
+  # gem 'pg'
 
 end

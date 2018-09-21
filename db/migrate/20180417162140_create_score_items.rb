@@ -1,4 +1,4 @@
-class CreateScoreItems < ActiveRecord::Migration
+class CreateScoreItems < ActiveRecord::Migration[5.2]
   def change
     create_table :score_items do |t|
       t.belongs_to :score

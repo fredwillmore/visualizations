@@ -56,7 +56,7 @@ var updateGraph = (selection) => {
 // ** Graph and App components
 // *****************************************************
 
-var Graph = React.createClass({
+class Graph extends React.Component {
   componentDidMount() {
     this.d3Graph = d3.select(ReactDOM.findDOMNode(this.refs.graph));
     force.on('tick', () => {
@@ -64,7 +64,7 @@ var Graph = React.createClass({
       // which uses d3 to manipulate the attributes,
       // and React doesn't have to go through lifecycle on each tick
       this.d3Graph.call(updateGraph);
-    });
+    })
     
     $.ajax({
       url: this.props.dataUrl,
@@ -77,7 +77,7 @@ var Graph = React.createClass({
       }.bind(this)
 
     })
-  },
+  }
 
   shouldComponentUpdate(nextProps) {
     this.d3Graph = d3.select(ReactDOM.findDOMNode(this.refs.graph));
@@ -103,28 +103,28 @@ var Graph = React.createClass({
     }
 
     return false;
-  },
+  }
 
   render() {
     return (
       <svg width={width} height={height}>
         <g ref='graph' />
       </svg>
-    );
+    )
   }
-});
+}
 
-var App = React.createClass({
+class App extends React.Component {
   getInitialState() {
     return {
       nodes: [],
       links: [],
     };
-  },
+  }
 
   componentDidMount() {
     this.updateData();
-  },
+  }
 
   updateData() {
     // randomData is loaded in from external file generate_data.js
@@ -143,10 +143,8 @@ var App = React.createClass({
           links: data.links
         })
       }.bind(this)
-
     })
-
-  },
+  }
 
   render() {
     return (
@@ -154,6 +152,6 @@ var App = React.createClass({
         <div className="update" onClick={this.updateData}>update</div>
         <Graph nodes={this.state.nodes} links={this.state.links} />
       </div>
-    );
-  },
-});
+    )
+  }
+}

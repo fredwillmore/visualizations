@@ -1,4 +1,4 @@
-class CreateBillboardTracks < ActiveRecord::Migration
+class CreateBillboardTracks < ActiveRecord::Migration[5.2]
   def change
     create_table :billboard_tracks do |t|
       t.string :name
