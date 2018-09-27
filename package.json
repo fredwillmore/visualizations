@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@rails/webpacker": "3.5",
+    "@rails/webpacker": "3.5.5",
     "babel-preset-react": "^6.24.1",
     "d3": "^5.7.0",
     "jquery": "^3.3.1",
