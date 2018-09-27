@@ -1,3 +1,5 @@
+import MultiLineChart from './MultiLineChart.jsx'
+
 class LifeExpectancyMultiLineChart extends React.Component {
   constructor (props) {
     super(props)
@@ -25,8 +27,8 @@ class LifeExpectancyMultiLineChart extends React.Component {
         yAxisLabelText = {this.props.yAxisLabelText}
         formatData = {(data) => {
           var headers = data[0]
-          formattedData = data.slice(1, data.length).map((d) => {
-            val = {values: []}
+          var formattedData = data.slice(1, data.length).map((d) => {
+            var val = {values: []}
             headers.forEach((v,k) => {
               if(isNaN(+v)){
                 val[v] = d[k]
@@ -98,3 +100,5 @@ LifeExpectancyMultiLineChart.defaultProps = {
   xAxisLabelText: 'Year',
   yAxisLabelText: 'Average Lifespan By Country'
 }
+
+export default LifeExpectancyMultiLineChart

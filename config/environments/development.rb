@@ -1,4 +1,8 @@
 Rails.application.configure do
+  # Verifies that versions and hashed value of the package contents in the project's package.json
+  config.webpacker.check_yarn_integrity = true
+  # Verifies that versions and hashed value of the package contents in the project's package.json
+  # config.webpacker.check_yarn_integrity = true
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded on
@@ -39,5 +43,5 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
-  config.react.jsx_transformer_class = React::JSX::BabelTransformer
+  # config.react.jsx_transformer_class = React::JSX::BabelTransformer
 end

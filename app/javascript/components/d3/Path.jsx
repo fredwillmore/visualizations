@@ -45,3 +45,5 @@ class Path extends React.Component {
 Path.defaultProps = {
 
 }
+
+export default Path

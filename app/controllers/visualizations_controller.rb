@@ -29,7 +29,7 @@ class VisualizationsController < ApplicationController
         if use_flat_file
           render json: File.read("db/seeds/data/asteroids/by_condition_code.json")
         else
-          render json: Asteroid.by_condition_code
+          render json: Asteroid.by_condition_code.first(1000)
         end
       end
     end

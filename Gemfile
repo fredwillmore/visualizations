@@ -39,6 +39,7 @@ gem 'react-rails'
 gem 'haml-rails'
 gem 'bootstrap'
 gem 'pg'
+gem 'webpacker'
 
 group :development, :test do
   # Use sqlite3 as the database for Active Record

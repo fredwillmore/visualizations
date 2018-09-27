@@ -1,3 +1,5 @@
+import MultiLineChart from './MultiLineChart.jsx'
+
 class BillboardMultiLineChart extends React.Component {
   constructor (props) {
     super(props)
@@ -45,7 +47,7 @@ class BillboardMultiLineChart extends React.Component {
 
   yearOptions() {
     var years = []
-    for(i=1940; i<=2015; i++) { years.push(i) }
+    for(var i=1940; i<=2015; i++) { years.push(i) }
     return years.map((current) => (
       <option key={current} value={current}>{current}</option>
     ))
@@ -88,8 +90,8 @@ class BillboardMultiLineChart extends React.Component {
           getSubheaderText = {(d) => `Entered the charts on ${new Date(Date.parse(d.entry_date)).toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric' })}. On the chart for a total of ${d.weeks} weeks. Peaked at number ${d.peak}.` }
           getCurrentItemID = {(d) => d.id}
           formatData = {(data) => {
-            formattedData = data.map((d) => {
-              val = {
+            var formattedData = data.map((d) => {
+              var val = {
                 id: d.id,
                 billboard_artist: d.billboard_artist,
                 name: d.name,
@@ -129,3 +131,5 @@ BillboardMultiLineChart.defaultProps = {
   xAxisLabelText: 'Date',
   yAxisLabelText: 'Chart Position'
 }
+
+export default BillboardMultiLineChart

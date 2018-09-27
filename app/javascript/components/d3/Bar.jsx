@@ -1,4 +1,4 @@
-// var ReactTransitionGroup = React.addons.TransitionGroup
+import ReactDOM from 'react-dom';
 
 class Bar extends React.Component {
   constructor (props) {
@@ -46,3 +46,5 @@ class Bar extends React.Component {
     )
   }
 }
+
+export default Bar

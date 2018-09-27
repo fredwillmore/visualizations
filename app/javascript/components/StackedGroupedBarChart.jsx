@@ -1,3 +1,6 @@
+import Axis from './d3/Axis.jsx'
+import Bar from './d3/Bar.jsx'
+import ReactTransitionGroup from 'react-addons-transition-group'
 
 class StackedGroupedBarChart extends React.Component {
   constructor (props) {
@@ -178,3 +181,5 @@ StackedGroupedBarChart.defaultProps = {
   valueFieldsLabels: {},
   margin: {top: 10, right: 10, bottom: 50, left: 50}
 }
+
+export default StackedGroupedBarChart

@@ -1,4 +1,8 @@
+// :javascript
+//   import Hello from 'components/hello'
+
 %h2 Asteroid Count By Condition Code - Linear Scale
+
 = react_component 'BarChart',                         |
   yScale: 'linear',                                   |
   dataUrl: '/visualizations/asteroid_bar_chart.json', |
@@ -7,6 +11,7 @@
   xAxisLabelText: 'Condition Code',                   |
   yAxisLabelText: 'Asteroid Count',                   |
   yAxisLabelOffset: 60                                |
+
 %p
   Thanks to user d3noob at bl.ocks.org for the starter code: #{link_to "https://bl.ocks.org/d3noob/bdf28027e0ce70bd132edc64f1dd7ea4"}
 = render partial: 'thanks_nasa'

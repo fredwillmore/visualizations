@@ -38,14 +38,15 @@
 #blurb{height:60px;border-top:1px solid #e2e2e2;padding-top:20px;}
 
 path {
-  stroke-width: 1;
+  // stroke-width: 1;
+  stroke-width: 2;
+  fill: none;
 }
 
 .multi-line-chart {
 
   path.line {
     stroke-width: 2;
-    fill: none;
   }
 
   path.highlight {

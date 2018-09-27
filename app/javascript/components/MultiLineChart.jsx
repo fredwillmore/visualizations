@@ -1,3 +1,10 @@
+import VisualizationsHelpers from '../visualizations.js'
+var vh = new VisualizationsHelpers
+
+import Axis from './d3/Axis.jsx'
+import Line from './d3/Line.jsx'
+import ReactTransitionGroup from 'react-addons-transition-group'
+
 class MultiLineChart extends React.Component {
   constructor (props) {
     super(props)
@@ -50,7 +57,7 @@ class MultiLineChart extends React.Component {
     ).range(
       [0, this.state.innerHeight]
     )
-    this.xScale = getScale(this.props.xScale).domain(
+    this.xScale = vh.getScale(this.props.xScale).domain(
       [this.state.xMin, this.state.xMax]
     ).range(
       [0, this.state.innerWidth]
@@ -63,6 +70,7 @@ class MultiLineChart extends React.Component {
       newState.headerText = this.getHeaderText(d)
       newState.subHeaderText = this.getSubheaderText(d)
     } else {
+      var item
       if(this.state.clickedItemID && (item = this.state.data.filter((v) => this.props.getClickedItemID(v) == this.state.clickedItemID)[0])){
         newState.headerText = this.getHeaderText(item)
         newState.subHeaderText = this.getSubheaderText(item)
@@ -234,7 +242,7 @@ class MultiLineChart extends React.Component {
                       return line_values.map((values, key) => (
                         <Line
                           key = {i + '_' + key}
-                          className = { toString([
+                          className = { vh.toString([
                             'line',
                             (this.props.getHighlightedItemID(d) == this.state.highlightedItemID) ? 'highlight' : '',
                             (this.props.getClickedItemID(d) == this.state.clickedItemID) ? 'clicked' : '',
@@ -327,3 +335,5 @@ MultiLineChart.defaultProps = {
   xAxisLabelOffset: 30,
   yAxisLabelOffset: 30
 }
+
+export default MultiLineChart

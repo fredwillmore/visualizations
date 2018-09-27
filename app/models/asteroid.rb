@@ -1,6 +1,6 @@
 class Asteroid < ActiveRecord::Base
   scope :by_condition_code, -> {
-    where.not(condition_code: nil).group(:condition_code).count.map { |k,v| { condition_code: k, count: v } }
+    where.not(condition_code: 0).group(:condition_code).count.map { |k,v| { condition_code: k, count: v } }
   }
   scope :perihelion_not_null, -> { where.not q: nil }
   scope :aphelion_not_null, -> { where.not ad: nil }

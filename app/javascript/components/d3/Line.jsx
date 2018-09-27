@@ -1,3 +1,6 @@
+import Path from './Path.jsx'
+import ReactDOM from 'react-dom'
+
 class Line extends React.Component {
   constructor (props) {
     super(props)
@@ -39,3 +42,5 @@ class Line extends React.Component {
 Line.defaultProps = {
   transitionDuration: 500
 }
+
+export default Line
