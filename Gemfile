@@ -32,7 +32,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'kaminari'
 gem 'd3-rails'
-# gem 'active_model_serializers'
+gem 'active_model_serializers'
 gem 'sprockets-es6'
 gem 'babel-transpiler'
 gem 'react-rails'
