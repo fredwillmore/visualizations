@@ -10,6 +10,7 @@
     "react": "^16.5.2",
     "react-addons-transition-group": "^15.6.2",
     "react-dom": "^16.5.2",
+    "react-transition-group": "^2.5.0",
     "react_ujs": "^2.4.4"
   },
   "devDependencies": {
