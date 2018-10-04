@@ -40,13 +40,18 @@
 path {
   // stroke-width: 1;
   stroke-width: 2;
-  fill: none;
+  // fill: none;
+}
+
+path.arc {
+  stroke-width: 1;
 }
 
 .multi-line-chart {
 
   path.line {
     stroke-width: 2;
+    fill: none;
   }
 
   path.highlight {
